@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: #333;
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-[#0d2d6b] text-white px-6 py-3 rounded hover:bg-[#1D6FA4] transition-colors duration-200 font-medium;
+  }
+  .btn-outline {
+    @apply border-2 border-[#0d2d6b] text-[#0d2d6b] px-6 py-3 rounded hover:bg-[#0d2d6b] hover:text-white transition-colors duration-200 font-medium;
+  }
+  .section-title {
+    @apply text-3xl font-bold text-gray-800 mb-4;
+  }
+  .section-subtitle {
+    @apply text-gray-500 max-w-xl mx-auto mb-10;
+  }
+}
