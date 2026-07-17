@@ -1,6 +1,19 @@
 import Image from 'next/image'
 
-export default function About() {
+export type AboutStat = { id: number; value: string; label: string }
+
+export type AboutContent = {
+  title: string
+  paragraph1: string
+  paragraph2: string
+  image: string
+  badge1Value: string
+  badge1Label: string
+  badge2Value: string
+  badge2Label: string
+}
+
+export default function About({ content, stats }: { content: AboutContent; stats: AboutStat[] }) {
   return (
     <section id="about" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4">
@@ -8,12 +21,7 @@ export default function About() {
           {/* Image side */}
           <div className="relative">
             <div className="rounded-2xl overflow-hidden aspect-[4/3] relative shadow-xl">
-              <Image
-                src="/image_face.jpeg"
-                alt="Mayo Klinic — Façade"
-                fill
-                className="object-cover object-center"
-              />
+              <Image src={content.image} alt="Mayo Klinic — Façade" fill className="object-cover object-center" />
               {/* subtle overlay */}
               <div className="absolute inset-0 bg-[#0d2d6b]/10" />
             </div>
@@ -26,8 +34,8 @@ export default function About() {
                 </svg>
               </div>
               <div>
-                <div className="text-2xl font-bold text-gray-800">15+</div>
-                <div className="text-gray-500 text-sm">Années d'excellence</div>
+                <div className="text-2xl font-bold text-gray-800">{content.badge1Value}</div>
+                <div className="text-gray-500 text-sm">{content.badge1Label}</div>
               </div>
             </div>
 
@@ -39,8 +47,8 @@ export default function About() {
                 </svg>
               </div>
               <div className="text-white">
-                <div className="text-2xl font-bold">500+</div>
-                <div className="text-blue-200 text-sm">Patients satisfaits</div>
+                <div className="text-2xl font-bold">{content.badge2Value}</div>
+                <div className="text-blue-200 text-sm">{content.badge2Label}</div>
               </div>
             </div>
           </div>
@@ -48,30 +56,23 @@ export default function About() {
           {/* Content side */}
           <div>
             <span className="text-[#1D6FA4] font-semibold uppercase tracking-widest text-sm">À Propos</span>
-            <h2 className="section-title mt-2">Bienvenue à Mayo Klinic</h2>
-            <p className="text-gray-500 mb-6 leading-relaxed">
-              Mayo Klinic est un établissement de santé privé situé au <strong className="text-gray-700">Quartier Ardep-djoumal, 3ème Arrondissement de N'Djamena</strong>. Nous nous engageons à fournir des soins médicaux exceptionnels à nos patients grâce à une équipe de médecins expérimentés et des équipements modernes.
-            </p>
-            <p className="text-gray-500 mb-8 leading-relaxed">
-              Avec 25 spécialités médicales et une approche centrée sur le patient, nous offrons des services complets allant des consultations de routine aux interventions spécialisées. Notre mission : rendre les soins de qualité accessibles à tous les Tchadiens.
-            </p>
+            <h2 className="section-title mt-2">{content.title}</h2>
+            <p className="text-gray-500 mb-6 leading-relaxed">{content.paragraph1}</p>
+            {content.paragraph2 && <p className="text-gray-500 mb-8 leading-relaxed">{content.paragraph2}</p>}
 
-            <div className="grid grid-cols-2 gap-6 mb-8">
-              {[
-                { label: 'Médecins spécialistes', value: '50+' },
-                { label: 'Spécialités médicales', value: '25' },
-                { label: 'Interventions réussies', value: '1200+' },
-                { label: 'Années d\'expérience', value: '15+' },
-              ].map((item) => (
-                <div key={item.label} className="flex items-center gap-3">
-                  <div className="w-3 h-3 bg-[#0d2d6b] rounded-full flex-shrink-0"></div>
-                  <div>
-                    <span className="font-bold text-gray-800">{item.value} </span>
-                    <span className="text-gray-500 text-sm">{item.label}</span>
+            {stats.length > 0 && (
+              <div className="grid grid-cols-2 gap-6 mb-8">
+                {stats.map((item) => (
+                  <div key={item.id} className="flex items-center gap-3">
+                    <div className="w-3 h-3 bg-[#0d2d6b] rounded-full flex-shrink-0"></div>
+                    <div>
+                      <span className="font-bold text-gray-800">{item.value} </span>
+                      <span className="text-gray-500 text-sm">{item.label}</span>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
 
             <div className="flex flex-wrap gap-4">
               <a href="#service" className="btn-primary inline-block">

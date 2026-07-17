@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { telHref, type SiteSettings } from '@/lib/settings'
 
 const quickLinks = [
   { label: 'Accueil', href: '#home' },
@@ -9,16 +10,22 @@ const quickLinks = [
   { label: 'Contact', href: '#contact' },
 ]
 
-const serviceLinks = ['Cardiologie', 'Neurologie', 'Ophtalmologie', 'Pédiatrie', 'Gynécologie', 'Orthopédie', 'Oncologie', 'Urgences']
+const socialPaths: Record<string, string> = {
+  Facebook: 'M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z',
+  Twitter: 'M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z',
+  Instagram: 'M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01M6.5 2h11A4.5 4.5 0 0122 6.5v11a4.5 4.5 0 01-4.5 4.5h-11A4.5 4.5 0 012 17.5v-11A4.5 4.5 0 016.5 2z',
+  LinkedIn: 'M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z M4 6a2 2 0 100-4 2 2 0 000 4z',
+}
 
-const socialLinks = [
-  { label: 'Facebook', path: 'M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z' },
-  { label: 'Twitter', path: 'M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z' },
-  { label: 'Instagram', path: 'M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01M6.5 2h11A4.5 4.5 0 0122 6.5v11a4.5 4.5 0 01-4.5 4.5h-11A4.5 4.5 0 012 17.5v-11A4.5 4.5 0 016.5 2z' },
-  { label: 'LinkedIn', path: 'M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z M4 6a2 2 0 100-4 2 2 0 000 4z' },
-]
-
-export default function Footer() {
+export default function Footer({
+  settings,
+  services,
+  socials,
+}: {
+  settings: SiteSettings
+  services: string[]
+  socials: { label: string; url: string }[]
+}) {
   return (
     <footer id="contact" className="bg-[#06172e] text-gray-300">
       <div className="max-w-7xl mx-auto px-4 py-16">
@@ -45,20 +52,24 @@ export default function Footer() {
             <p className="text-xs text-blue-300 mb-5 italic">
               À côté du Lycée Félix Eboué et de l'Agence Tchadienne de Presse.
             </p>
-            <div className="flex gap-3">
-              {socialLinks.map((s) => (
-                <a
-                  key={s.label}
-                  href="#"
-                  aria-label={s.label}
-                  className="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-[#1D6FA4] transition-colors"
-                >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d={s.path} />
-                  </svg>
-                </a>
-              ))}
-            </div>
+            {socials.length > 0 && (
+              <div className="flex gap-3">
+                {socials.map((s) => (
+                  <a
+                    key={s.label}
+                    href={s.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={s.label}
+                    className="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-[#1D6FA4] transition-colors"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d={socialPaths[s.label]} />
+                    </svg>
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Quick Links */}
@@ -82,7 +93,7 @@ export default function Footer() {
           <div>
             <h3 className="text-white font-bold text-lg mb-5">Nos Spécialités</h3>
             <ul className="space-y-3">
-              {serviceLinks.map((s) => (
+              {services.map((s) => (
                 <li key={s}>
                   <a href="#service" className="text-sm hover:text-[#1D6FA4] transition-colors flex items-center gap-2">
                     <svg className="w-3 h-3 text-[#1D6FA4]" fill="currentColor" viewBox="0 0 24 24">
@@ -104,7 +115,7 @@ export default function Footer() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                 </svg>
-                <span>Quartier Ardep-djoumal<br/>3ème Arrondissement<br/>N'Djamena, Tchad</span>
+                <span>{settings.address}</span>
               </li>
               <li className="flex items-start gap-3 text-xs text-blue-300">
                 <svg className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -117,19 +128,19 @@ export default function Footer() {
                 <svg className="w-5 h-5 text-[#1D6FA4] flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M6.62 10.79a15.53 15.53 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24 11.47 11.47 0 003.58.57 1 1 0 011 1v3.5a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.47 11.47 0 00.57 3.58 1 1 0 01-.25 1.01l-2.2 2.2z"/>
                 </svg>
-                <a href="tel:+463281626556" className="hover:text-[#1D6FA4] transition-colors">+463 281 626 556</a>
+                <a href={telHref(settings.phone)} className="hover:text-[#1D6FA4] transition-colors">{settings.phone}</a>
               </li>
               <li className="flex items-center gap-3">
                 <svg className="w-5 h-5 text-[#1D6FA4] flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
                 </svg>
-                <a href="mailto:contact@mayoklinic.td" className="hover:text-[#1D6FA4] transition-colors">contact@mayoklinic.td</a>
+                <a href={`mailto:${settings.email}`} className="hover:text-[#1D6FA4] transition-colors">{settings.email}</a>
               </li>
               <li className="flex items-center gap-3">
                 <svg className="w-5 h-5 text-[#1D6FA4] flex-shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <span>Lun–Sam : 8h00 – 18h00</span>
+                <span>{settings.hours}</span>
               </li>
             </ul>
           </div>

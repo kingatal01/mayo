@@ -1,17 +1,27 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useTransition } from 'react'
+import { subscribeNewsletter } from '@/lib/actions/newsletter'
 
-export default function Newsletter() {
+export default function Newsletter({ phone }: { phone: string }) {
   const [email, setEmail] = useState('')
   const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [pending, startTransition] = useTransition()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (email) {
-      setSubmitted(true)
-      setEmail('')
-    }
+    setError(null)
+    const formData = new FormData(e.currentTarget)
+    startTransition(async () => {
+      const result = await subscribeNewsletter(formData)
+      if (result.ok) {
+        setSubmitted(true)
+        setEmail('')
+      } else {
+        setError(result.error)
+      }
+    })
   }
 
   return (
@@ -32,6 +42,7 @@ export default function Newsletter() {
               <form onSubmit={handleSubmit} className="flex gap-3">
                 <input
                   type="email"
+                  name="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Votre adresse e-mail"
@@ -40,11 +51,15 @@ export default function Newsletter() {
                 />
                 <button
                   type="submit"
-                  className="bg-white text-[#1D6FA4] px-6 py-3 rounded font-semibold text-sm hover:bg-blue-50 transition-colors whitespace-nowrap"
+                  disabled={pending}
+                  className="bg-white text-[#1D6FA4] px-6 py-3 rounded font-semibold text-sm hover:bg-blue-50 transition-colors whitespace-nowrap disabled:opacity-60"
                 >
-                  S'inscrire
+                  {pending ? '...' : "S'inscrire"}
                 </button>
               </form>
+            )}
+            {error && (
+              <div className="mt-3 bg-white/20 text-white rounded-lg px-4 py-2 text-sm">{error}</div>
             )}
           </div>
         </div>
@@ -67,13 +82,13 @@ export default function Newsletter() {
               Notre équipe médicale d'urgence est disponible à toute heure. En cas d'urgence médicale, n'hésitez pas à nous appeler immédiatement.
             </p>
             <a
-              href="tel:+23530031414"
+              href={`tel:${phone.split('/')[0].replace(/[^0-9+]/g, '')}`}
               className="inline-flex items-center gap-3 bg-white text-[#1D6FA4] px-6 py-3 rounded font-bold hover:bg-blue-50 transition-colors"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M6.62 10.79a15.53 15.53 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24 11.47 11.47 0 003.58.57 1 1 0 011 1v3.5a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.47 11.47 0 00.57 3.58 1 1 0 01-.25 1.01l-2.2 2.2z"/>
               </svg>
-              (235) 30031414 / 65173434
+              {phone}
             </a>
           </div>
         </div>

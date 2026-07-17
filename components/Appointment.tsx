@@ -1,49 +1,47 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useTransition } from 'react'
+import { createAppointment } from '@/lib/actions/appointments'
 
-const specialties = [
-  'Ophtalmologie',
-  'Dentiste',
-  'Cardiologie',
-  'Neurologie',
-  'Pédiatrie',
-  'Gynécologie & Obstétrique',
-  'Orthopédie',
-  'Rhumatologie',
-  'Diabétologie',
-  'Nutrition',
-  'Chirurgie Viscérale',
-  'Neurochirurgie',
-  'Chirurgie Vasculaire',
-  'Médecine du Travail',
-  'Gastro-Entérologie',
-  'MPR — Médecine Physique & Réadaptation',
-  'Urologie',
-  'Hématologie',
-  'Expertise Médicale',
-  'Urgences',
-  'Oncologie',
-  'Imagerie Médicale',
-  'Laboratoire & Biologie Médicale',
-  'Chirurgie Maxillo-Faciale',
-  'Chirurgie Esthétique',
-]
+export type AppointmentSettings = {
+  phone: string
+  email: string
+  address: string
+  hours: string
+  latitude: string
+  longitude: string
+}
 
-const LAT = 12.0969048
-const LNG = 15.0590096
-
-export default function Appointment() {
+export default function Appointment({
+  specialties,
+  settings,
+}: {
+  specialties: string[]
+  settings: AppointmentSettings
+}) {
+  const LAT = settings.latitude
+  const LNG = settings.longitude
   const [form, setForm] = useState({ name: '', email: '', phone: '', specialty: '', date: '', message: '' })
   const [sent, setSent] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [pending, startTransition] = useTransition()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value })
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setSent(true)
+    setError(null)
+    const formData = new FormData(e.currentTarget)
+    startTransition(async () => {
+      const result = await createAppointment(formData)
+      if (result.ok) {
+        setSent(true)
+      } else {
+        setError(result.error)
+      }
+    })
   }
 
   return (
@@ -85,7 +83,7 @@ export default function Appointment() {
                     </svg>
                   ),
                   label: 'Notre Adresse',
-                  value: "Quartier Ardep-djoumal, 3ème Arrondissement, N'Djamena",
+                  value: settings.address,
                   href: `https://www.google.com/maps?q=${LAT},${LNG}`,
                 },
                 {
@@ -95,8 +93,8 @@ export default function Appointment() {
                     </svg>
                   ),
                   label: 'Téléphone',
-                  value: '(235) 30031414 / 65173434',
-                  href: 'tel:+23530031414',
+                  value: settings.phone,
+                  href: `tel:${settings.phone.split('/')[0].replace(/[^0-9+]/g, '')}`,
                 },
                 {
                   icon: (
@@ -105,8 +103,8 @@ export default function Appointment() {
                     </svg>
                   ),
                   label: 'Email',
-                  value: 'contact@mayoklinic.td',
-                  href: 'mailto:contact@mayoklinic.td',
+                  value: settings.email,
+                  href: `mailto:${settings.email}`,
                 },
                 {
                   icon: (
@@ -115,7 +113,7 @@ export default function Appointment() {
                     </svg>
                   ),
                   label: 'Horaires',
-                  value: 'Lun–Sam : 8h00 – 18h00',
+                  value: settings.hours,
                   href: null,
                 },
               ].map((item) => (
@@ -226,8 +224,11 @@ export default function Appointment() {
                     className="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1D6FA4] focus:border-transparent resize-none"
                   />
                 </div>
-                <button type="submit" className="btn-primary w-full text-center">
-                  Envoyer la demande
+                {error && (
+                  <div className="bg-red-50 text-red-600 text-sm rounded-lg px-4 py-3">{error}</div>
+                )}
+                <button type="submit" disabled={pending} className="btn-primary w-full text-center disabled:opacity-60 disabled:cursor-not-allowed">
+                  {pending ? 'Envoi en cours...' : 'Envoyer la demande'}
                 </button>
               </form>
             )}
