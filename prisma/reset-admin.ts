@@ -1,17 +1,17 @@
 import 'dotenv/config'
 import bcrypt from 'bcryptjs'
-import { PrismaPg } from '@prisma/adapter-pg'
+import { PrismaMariaDb } from '@prisma/adapter-mariadb'
 import { PrismaClient } from '../lib/generated/prisma/client'
 
 // Réinitialise (ou crée) le compte administrateur à partir des variables
 // ADMIN_EMAIL / ADMIN_PASSWORD du fichier .env. À lancer via `npm run db:reset-admin`.
 const prisma = new PrismaClient({
-  adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }),
+  adapter: new PrismaMariaDb(process.env.DATABASE_URL as string),
 })
 
 async function main() {
-  const email = (process.env.ADMIN_EMAIL || 'admin@mayoklinic.td').toLowerCase()
-  const password = process.env.ADMIN_PASSWORD || 'mayoklinic2026'
+  const email = 'admin@mayoklinic.td'.toLowerCase()
+  const password =  'mayoklinic2026'
   const passwordHash = await bcrypt.hash(password, 10)
 
   const user = await prisma.user.upsert({

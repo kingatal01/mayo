@@ -14,10 +14,12 @@
     "db:reset-admin": "tsx prisma/reset-admin.ts"
   },
   "dependencies": {
+    "@prisma/adapter-mariadb": "^7.9.1",
     "@prisma/adapter-pg": "^7.8.0",
     "@prisma/client": "^7.8.0",
     "bcryptjs": "^3.0.3",
     "dotenv": "^17.4.2",
+    "mariadb": "^3.5.3",
     "next": "^15.5.15",
     "prisma": "^7.8.0",
     "react": "^18",

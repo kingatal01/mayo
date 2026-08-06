@@ -4,7 +4,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
 }
 
 enum AppointmentStatus {
@@ -52,7 +52,7 @@ model HeroSlide {
   id          Int      @id @default(autoincrement())
   tag         String
   title       String
-  description String
+  description String   @db.Text
   ctaLabel    String   @default("En savoir plus")
   ctaHref     String   @default("#about")
   image       String   @default("/image_face.jpeg")
@@ -79,8 +79,8 @@ model Stat {
 model Specialty {
   id          Int      @id @default(autoincrement())
   title       String   @unique
-  description String
-  icon        String?
+  description String   @db.Text
+  icon        String?  @db.LongText
   color       String   @default("bg-sky-50 text-sky-500 group-hover:bg-sky-500 group-hover:text-white")
   active      Boolean  @default(true)
   order       Int      @default(0)
@@ -113,8 +113,8 @@ model BlogPost {
   title       String
   slug        String    @unique
   category    String
-  excerpt     String
-  content     String?
+  excerpt     String    @db.Text
+  content     String?   @db.LongText
   color       String    @default("from-blue-400 to-blue-600")
   readTime    String    @default("5 min de lecture")
   published   Boolean   @default(false)
@@ -129,7 +129,7 @@ model Testimonial {
   id        Int      @id @default(autoincrement())
   name      String
   role      String
-  text      String
+  text      String   @db.Text
   initials  String
   color     String   @default("bg-blue-500")
   rating    Int      @default(5)
@@ -142,8 +142,8 @@ model Testimonial {
 
 model Faq {
   id        Int      @id @default(autoincrement())
-  question  String
-  answer    String
+  question  String   @db.Text
+  answer    String   @db.Text
   active    Boolean  @default(true)
   order     Int      @default(0)
   createdAt DateTime @default(now())
@@ -159,7 +159,7 @@ model Appointment {
   phone     String?
   specialty String
   date      DateTime          @db.Date
-  message   String?
+  message   String?           @db.Text
   status    AppointmentStatus @default(PENDING)
   createdAt DateTime          @default(now())
   updatedAt DateTime          @updatedAt
@@ -178,8 +178,8 @@ model NewsletterSubscriber {
 }
 
 model Setting {
-  key       String   @id
-  value     String
+  key       String   @id @db.VarChar(191)
+  value     String   @db.Text
   updatedAt DateTime @updatedAt
 
   @@map("settings")
