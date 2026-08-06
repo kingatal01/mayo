@@ -1,25 +1,19 @@
 import { NextResponse, type NextRequest } from 'next/server'
-import { SESSION_COOKIE, SESSION_VALUE } from '@/lib/auth'
+import { SESSION_COOKIE } from '@/lib/auth'
 
+// Garde légère (edge) : bloque l'accès à /admin sans cookie de session.
+// La validation réelle (session en BD + compte actif + rôle) est faite dans
+// le layout admin via getCurrentUser().
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl
-  const isLogin = pathname === '/admin/login'
-  const authed = req.cookies.get(SESSION_COOKIE)?.value === SESSION_VALUE
+  if (pathname === '/admin/login') return NextResponse.next()
 
-  // Non authentifié → redirige vers la connexion
-  if (!authed && !isLogin) {
+  const hasCookie = Boolean(req.cookies.get(SESSION_COOKIE)?.value)
+  if (!hasCookie) {
     const url = req.nextUrl.clone()
     url.pathname = '/admin/login'
     return NextResponse.redirect(url)
   }
-
-  // Déjà authentifié et sur la page de connexion → va au tableau de bord
-  if (authed && isLogin) {
-    const url = req.nextUrl.clone()
-    url.pathname = '/admin'
-    return NextResponse.redirect(url)
-  }
-
   return NextResponse.next()
 }
 

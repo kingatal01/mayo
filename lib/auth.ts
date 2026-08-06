@@ -1,12 +1,5 @@
-// Configuration d'authentification admin (importable côté middleware et serveur).
-// Définissez ADMIN_EMAIL / ADMIN_PASSWORD / ADMIN_SESSION_SECRET dans .env en production.
-
-export const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@mayoklinic.td'
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'mayoklinic2026'
+// Constantes d'authentification importables partout, y compris le middleware
+// (edge runtime). Ne rien importer ici qui dépende de Node/Prisma/bcrypt.
 
 export const SESSION_COOKIE = 'mk_admin'
-export const SESSION_VALUE = process.env.ADMIN_SESSION_SECRET || 'mk-admin-session-v1'
-
-export function checkCredentials(email: string, password: string): boolean {
-  return email.trim().toLowerCase() === ADMIN_EMAIL.toLowerCase() && password === ADMIN_PASSWORD
-}
+export const SESSION_MAX_AGE = 60 * 60 * 24 * 7 // 7 jours (secondes)

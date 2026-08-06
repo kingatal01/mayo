@@ -1,4 +1,5 @@
 import 'dotenv/config'
+import bcrypt from 'bcryptjs'
 import { PrismaPg } from '@prisma/adapter-pg'
 import { PrismaClient } from '../lib/generated/prisma/client'
 
@@ -195,6 +196,23 @@ async function main() {
   await prisma.stat.deleteMany()
   await prisma.stat.createMany({ data: stats.map((s, i) => ({ ...s, order: i })) })
   console.log(`✔ ${stats.length} statistiques`)
+
+  // Utilisateur admin initial (identifiants depuis .env, avec repli).
+  const adminEmail = (process.env.ADMIN_EMAIL || 'admin@mayoklinic.td').toLowerCase()
+  const adminPassword = process.env.ADMIN_PASSWORD || 'mayoklinic2026'
+  if ((await prisma.user.count()) === 0) {
+    await prisma.user.create({
+      data: {
+        name: 'Administrateur',
+        email: adminEmail,
+        passwordHash: await bcrypt.hash(adminPassword, 10),
+        role: 'ADMIN',
+      },
+    })
+    console.log(`✔ utilisateur admin créé (${adminEmail})`)
+  } else {
+    console.log('✔ utilisateurs déjà présents (admin non recréé)')
+  }
 }
 
 main()

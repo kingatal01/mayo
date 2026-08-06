@@ -1,6 +1,18 @@
 'use client'
 
-export default function AdminHeader({ onMenuClick }: { onMenuClick: () => void }) {
+const roleLabels: Record<string, string> = { ADMIN: 'Administrateur', EDITOR: 'Éditeur' }
+
+function initials(name: string) {
+  return name.split(/\s+/).filter(Boolean).map((w) => w[0]).join('').slice(0, 2).toUpperCase() || 'AD'
+}
+
+export default function AdminHeader({
+  onMenuClick,
+  user,
+}: {
+  onMenuClick: () => void
+  user: { name: string; email: string; role: string }
+}) {
   return (
     <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 sm:px-6 sticky top-0 z-20">
       <div className="flex items-center gap-3">
@@ -38,11 +50,11 @@ export default function AdminHeader({ onMenuClick }: { onMenuClick: () => void }
         {/* Profil */}
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-full bg-[#1D6FA4] text-white flex items-center justify-center font-bold text-sm">
-            AD
+            {initials(user.name)}
           </div>
           <div className="hidden sm:block">
-            <div className="text-sm font-semibold text-gray-800 leading-tight">Administrateur</div>
-            <div className="text-xs text-gray-400">admin@mayoklinic.td</div>
+            <div className="text-sm font-semibold text-gray-800 leading-tight">{user.name}</div>
+            <div className="text-xs text-gray-400">{roleLabels[user.role] ?? user.role} · {user.email}</div>
           </div>
         </div>
       </div>

@@ -1,33 +1,25 @@
 'use server'
 
-import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { checkCredentials, SESSION_COOKIE, SESSION_VALUE } from '@/lib/auth'
+import { prisma } from '@/lib/prisma'
+import { createSession, destroySession, verifyPassword } from '@/lib/session'
 
 export type LoginResult = { ok: false; error: string } | undefined
 
 export async function login(formData: FormData): Promise<LoginResult> {
-  const email = String(formData.get('email') ?? '')
+  const email = String(formData.get('email') ?? '').trim().toLowerCase()
   const password = String(formData.get('password') ?? '')
 
-  if (!checkCredentials(email, password)) {
+  const user = await prisma.user.findUnique({ where: { email } })
+  if (!user || !user.active || !(await verifyPassword(password, user.passwordHash))) {
     return { ok: false, error: 'Email ou mot de passe incorrect.' }
   }
 
-  const store = await cookies()
-  store.set(SESSION_COOKIE, SESSION_VALUE, {
-    httpOnly: true,
-    sameSite: 'lax',
-    secure: process.env.NODE_ENV === 'production',
-    path: '/',
-    maxAge: 60 * 60 * 24 * 7, // 7 jours
-  })
-
+  await createSession(user.id)
   redirect('/admin')
 }
 
 export async function logout() {
-  const store = await cookies()
-  store.delete(SESSION_COOKIE)
+  await destroySession()
   redirect('/admin/login')
 }
