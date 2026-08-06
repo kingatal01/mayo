@@ -198,8 +198,8 @@ async function main() {
   console.log(`✔ ${stats.length} statistiques`)
 
   // Utilisateur admin initial (identifiants depuis .env, avec repli).
-  const adminEmail = (process.env.ADMIN_EMAIL || 'admin@mayoklinic.td').toLowerCase()
-  const adminPassword = process.env.ADMIN_PASSWORD || 'mayoklinic2026'
+  const adminEmail =  'admin@mayoklinic.td'.toLowerCase()
+  const adminPassword = 'mayoklinic2026'
   if ((await prisma.user.count()) === 0) {
     await prisma.user.create({
       data: {
