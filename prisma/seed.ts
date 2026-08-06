@@ -93,63 +93,63 @@ const faqs = [
 ]
 
 const settings = [
-  { key: 'phone', value: '(235) 30031414 / 65173434' },
-  { key: 'email', value: 'contact@mayoklinic.td' },
-  { key: 'address', value: "Quartier Ardep-djoumal, 3ème Arrondissement — N'Djamena, Tchad" },
+  { key: 'phone', value: '+235 300 31 414 / +235 651 173 3434' },
+  { key: 'email', value: 'contact@mayoklinic.org' },
+  { key: 'address', value: "Boulevard du Maréchal Idriss Déby Itno, Quartier Sabangali, N'Djamena, Tchad" },
   { key: 'latitude', value: '12.0969048' },
   { key: 'longitude', value: '15.0590096' },
-  { key: 'hours', value: 'Lun–Sam : 8h00 – 18h00' },
+  { key: 'hours', value: 'Lun–Ven : 08h30 – 16h30 · Sam : 08h30 – 13h00' },
   { key: 'emergency', value: '24h/24 et 7j/7' },
   { key: 'facebook', value: '' },
   { key: 'twitter', value: '' },
   { key: 'instagram', value: '' },
   // Section À propos
-  { key: 'about_title', value: 'Bienvenue à Mayo Klinic' },
-  { key: 'about_paragraph1', value: "Mayo Klinic est un établissement de santé privé situé au Quartier Ardep-djoumal, 3ème Arrondissement de N'Djamena. Nous nous engageons à fournir des soins médicaux exceptionnels à nos patients grâce à une équipe de médecins expérimentés et des équipements modernes." },
-  { key: 'about_paragraph2', value: 'Avec 25 spécialités médicales et une approche centrée sur le patient, nous offrons des services complets allant des consultations de routine aux interventions spécialisées. Notre mission : rendre les soins de qualité accessibles à tous les Tchadiens.' },
+  { key: 'about_title', value: "Une clinique pensée pour l'excellence médicale" },
+  { key: 'about_paragraph1', value: "La Mayo Klinic de Sabangali (N'Djamena, Tchad) est une structure hospitalière haut de gamme dotée d'un plateau technique avancé, dédiée aux urgences, aux soins critiques, aux interventions chirurgicales et aux consultations spécialisées." },
+  { key: 'about_paragraph2', value: "Notre mission est simple : garantir à chaque patient un accès rapide, sûr et maîtrisé à des soins de qualité — que ce soit pour une urgence, un suivi chronique, un bilan médical d'entreprise ou une évacuation sanitaire internationale." },
   { key: 'about_image', value: '/image_face.jpeg' },
-  { key: 'about_badge1_value', value: '15+' },
-  { key: 'about_badge1_label', value: "Années d'excellence" },
-  { key: 'about_badge2_value', value: '500+' },
-  { key: 'about_badge2_label', value: 'Patients satisfaits' },
+  { key: 'about_badge1_value', value: '24/7' },
+  { key: 'about_badge1_label', value: 'Urgences & soins critiques' },
+  { key: 'about_badge2_value', value: '15 min' },
+  { key: 'about_badge2_label', value: "De la clinique à l'aéroport" },
 ]
 
 const heroSlides = [
   {
-    tag: 'Bienvenue à Mayo Klinic',
-    title: 'Une Solution de Santé Complète',
-    description: "Nous offrons les meilleurs soins médicaux avec des spécialistes expérimentés et des équipements modernes pour votre bien-être à N'Djamena.",
-    ctaLabel: 'En savoir plus',
-    ctaHref: '#about',
+    tag: 'Mayo Klinic — Sabangali, N\'Djamena',
+    title: "La médecine d'excellence, au cœur de N'Djamena",
+    description: "Structure hospitalière haut de gamme dotée d'un plateau technique avancé : urgences, soins critiques, chirurgie et consultations spécialisées, disponibles 24h/24 et 7j/7.",
+    ctaLabel: 'Prendre rendez-vous',
+    ctaHref: '#appointment',
     image: '/image_face.jpeg',
   },
   {
-    tag: 'Équipe Médicale Experte',
-    title: 'Les Meilleurs Médecins et Équipements',
-    description: "Notre équipe de professionnels dévoués s'engage à vous fournir des soins de santé excellents à toute heure du jour et de la nuit.",
-    ctaLabel: 'Prendre RDV',
+    tag: 'Urgences & soins critiques',
+    title: 'Une prise en charge rapide, à toute heure',
+    description: "Nos urgences sont ouvertes 24h/24 et 7j/7. Dès votre arrivée, votre situation est évaluée immédiatement pour vous orienter vers la prise en charge adaptée.",
+    ctaLabel: 'Urgences 24/7',
     ctaHref: '#appointment',
     image: '/image1.jpeg',
   },
   {
-    tag: 'Votre Bien-être en Premier',
-    title: 'Votre Santé est Notre Priorité',
-    description: 'Situés au Quartier Ardep-djoumal, 3ème Arrondissement, nous proposons 25 spécialités médicales adaptées à vos besoins.',
-    ctaLabel: 'Nos Spécialités',
+    tag: 'Entreprises & institutions',
+    title: 'Des solutions santé sur-mesure pour vos équipes',
+    description: "Abonnements corporate, médecine du travail, cliniques mobiles et évacuation médicale (CaseVac/MedEvac) pour vos collaborateurs sur le terrain.",
+    ctaLabel: 'Nos services',
     ctaHref: '#service',
     image: '/image_face.jpeg',
   },
 ]
 
 const stats: { section: 'HERO' | 'ABOUT'; value: string; label: string }[] = [
-  { section: 'HERO', value: '500+', label: 'Patients traités' },
-  { section: 'HERO', value: '50+', label: 'Médecins experts' },
-  { section: 'HERO', value: '25', label: 'Spécialités médicales' },
-  { section: 'HERO', value: '24/7', label: "Service d'urgence" },
-  { section: 'ABOUT', value: '50+', label: 'Médecins spécialistes' },
-  { section: 'ABOUT', value: '25', label: 'Spécialités médicales' },
-  { section: 'ABOUT', value: '1200+', label: 'Interventions réussies' },
-  { section: 'ABOUT', value: '15+', label: "Années d'expérience" },
+  { section: 'HERO', value: '24/7', label: 'Urgences et régulation médicale' },
+  { section: 'HERO', value: '15', label: 'Unités et plateaux techniques' },
+  { section: 'HERO', value: '15 min', label: "Clinique → Aéroport international" },
+  { section: 'HERO', value: '3', label: 'Trajectoires de sortie possibles' },
+  { section: 'ABOUT', value: '24/7', label: 'Urgences sans interruption' },
+  { section: 'ABOUT', value: '15', label: 'Unités et plateaux techniques' },
+  { section: 'ABOUT', value: '15 min', label: "De la clinique à l'aéroport" },
+  { section: 'ABOUT', value: '6+', label: 'Hôpitaux pivots partenaires' },
 ]
 
 async function main() {
@@ -183,18 +183,17 @@ async function main() {
   console.log(`✔ ${faqs.length} FAQ`)
 
   for (const s of settings) {
-    await prisma.setting.upsert({ where: { key: s.key }, update: {}, create: s })
+    await prisma.setting.upsert({ where: { key: s.key }, update: { value: s.value }, create: s })
   }
   console.log(`✔ ${settings.length} paramètres`)
 
-  if ((await prisma.heroSlide.count()) === 0) {
-    await prisma.heroSlide.createMany({ data: heroSlides.map((s, i) => ({ ...s, order: i })) })
-  }
+  // Hero et statistiques : contenu canonique du client — on remplace à chaque seed.
+  await prisma.heroSlide.deleteMany()
+  await prisma.heroSlide.createMany({ data: heroSlides.map((s, i) => ({ ...s, order: i })) })
   console.log(`✔ ${heroSlides.length} slides Hero`)
 
-  if ((await prisma.stat.count()) === 0) {
-    await prisma.stat.createMany({ data: stats.map((s, i) => ({ ...s, order: i })) })
-  }
+  await prisma.stat.deleteMany()
+  await prisma.stat.createMany({ data: stats.map((s, i) => ({ ...s, order: i })) })
   console.log(`✔ ${stats.length} statistiques`)
 }
 
