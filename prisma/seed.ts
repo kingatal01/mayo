@@ -154,10 +154,15 @@ const stats: { section: 'HERO' | 'ABOUT'; value: string; label: string }[] = [
 ]
 
 async function main() {
+  // Mode additif (SEED_APPEND=1) : n'ajoute que ce qui manque, sans écraser ni
+  // supprimer les données existantes (utile en production après des édits admin).
+  const append = process.env.SEED_APPEND === '1'
+  if (append) console.log('▸ Mode ADDITIF : aucune donnée existante ne sera écrasée ni supprimée.')
+
   for (const [i, s] of specialties.entries()) {
     await prisma.specialty.upsert({
       where: { title: s.title },
-      update: { description: s.description, color: s.color, order: i },
+      update: append ? {} : { description: s.description, color: s.color, order: i },
       create: { ...s, order: i },
     })
   }
@@ -184,17 +189,23 @@ async function main() {
   console.log(`✔ ${faqs.length} FAQ`)
 
   for (const s of settings) {
-    await prisma.setting.upsert({ where: { key: s.key }, update: { value: s.value }, create: s })
+    // En mode additif on crée seulement les clés manquantes (pas d'écrasement).
+    await prisma.setting.upsert({ where: { key: s.key }, update: append ? {} : { value: s.value }, create: s })
   }
   console.log(`✔ ${settings.length} paramètres`)
 
-  // Hero et statistiques : contenu canonique du client, remplacé à chaque seed.
-  await prisma.heroSlide.deleteMany()
-  await prisma.heroSlide.createMany({ data: heroSlides.map((s, i) => ({ ...s, order: i })) })
+  // Hero et statistiques : en mode normal, contenu canonique du client remplacé à
+  // chaque seed. En mode additif, on ne recrée que si la table est vide.
+  if (!append) await prisma.heroSlide.deleteMany()
+  if ((await prisma.heroSlide.count()) === 0) {
+    await prisma.heroSlide.createMany({ data: heroSlides.map((s, i) => ({ ...s, order: i })) })
+  }
   console.log(`✔ ${heroSlides.length} slides Hero`)
 
-  await prisma.stat.deleteMany()
-  await prisma.stat.createMany({ data: stats.map((s, i) => ({ ...s, order: i })) })
+  if (!append) await prisma.stat.deleteMany()
+  if ((await prisma.stat.count()) === 0) {
+    await prisma.stat.createMany({ data: stats.map((s, i) => ({ ...s, order: i })) })
+  }
   console.log(`✔ ${stats.length} statistiques`)
 
   // Utilisateur admin initial (identifiants depuis .env, avec repli).

@@ -92,7 +92,8 @@ LOW_RESOURCE_BUILD=1 npx yarn build   # ou la commande complète ci-dessus
 | `npm run dev` | serveur de développement |
 | `npm run build` | build de production |
 | `npm run db:push` | synchronise le schéma Prisma avec la base |
-| `npm run db:seed` | (ré)applique le contenu de référence + crée l'admin |
+| `npm run db:seed` | ⚠️ (ré)applique le contenu de référence : **écrase** paramètres, Hero, stats et les 25 spécialités |
+| `npm run db:seed-append` | mode **additif** : n'ajoute que ce qui manque, **sans rien écraser** (à utiliser en prod) |
 | `npm run db:reset` | ⚠️ vide la base puis re-seed (dev uniquement) |
 | `npm run db:reset-admin` | réinitialise le mot de passe admin depuis `.env` |
 
