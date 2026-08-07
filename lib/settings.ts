@@ -37,6 +37,25 @@ export async function getSiteSettings(): Promise<SiteSettings> {
   return { ...defaults, ...map } as SiteSettings
 }
 
+// Lit un paramètre libre (hors SiteSettings) avec valeur par défaut.
+export async function getSetting(key: string, fallback = ''): Promise<string> {
+  const row = await prisma.setting.findUnique({ where: { key } })
+  return row?.value ?? fallback
+}
+
+// Liste des hôpitaux pivots (partagée Entreprises / EVASAN), stockée dans un
+// paramètre sous forme de valeurs séparées par des virgules.
+export const PIVOT_HOSPITALS_KEY = 'pivot_hospitals'
+export const PIVOT_HOSPITALS_DEFAULT = 'Tunis, Casablanca, Johannesburg, Nairobi, Europe, Turquie'
+
+export async function getPivotHospitals(): Promise<string[]> {
+  const value = await getSetting(PIVOT_HOSPITALS_KEY, PIVOT_HOSPITALS_DEFAULT)
+  return value
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean)
+}
+
 // Renvoie la liste des réseaux sociaux renseignés (pour l'affichage public).
 export function socialLinks(settings: SiteSettings): { label: string; url: string }[] {
   return (

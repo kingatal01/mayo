@@ -113,6 +113,8 @@ const settings = [
   { key: 'about_badge1_label', value: 'Urgences & soins critiques' },
   { key: 'about_badge2_value', value: '15 min' },
   { key: 'about_badge2_label', value: "De la clinique à l'aéroport" },
+  // Pages Entreprises & EVASAN
+  { key: 'pivot_hospitals', value: 'Tunis, Casablanca, Johannesburg, Nairobi, Europe, Turquie' },
 ]
 
 const heroSlides = [

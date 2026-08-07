@@ -1,7 +1,9 @@
 import HeroSlidesSection from '@/components/admin/HeroSlidesSection'
 import StatsSection from '@/components/admin/StatsSection'
 import AboutSection, { type AboutSettings } from '@/components/admin/AboutSection'
+import PivotHospitalsSection from '@/components/admin/PivotHospitalsSection'
 import { prisma } from '@/lib/prisma'
+import { PIVOT_HOSPITALS_KEY, PIVOT_HOSPITALS_DEFAULT } from '@/lib/settings'
 
 const aboutDefaults: AboutSettings = {
   about_title: 'Bienvenue à Mayo Klinic',
@@ -15,14 +17,16 @@ const aboutDefaults: AboutSettings = {
 }
 
 export default async function AdminContent() {
-  const [slides, stats, aboutRows] = await Promise.all([
+  const [slides, stats, aboutRows, pivotRow] = await Promise.all([
     prisma.heroSlide.findMany({ orderBy: { order: 'asc' } }),
     prisma.stat.findMany({ orderBy: { order: 'asc' } }),
     prisma.setting.findMany({ where: { key: { startsWith: 'about_' } } }),
+    prisma.setting.findUnique({ where: { key: PIVOT_HOSPITALS_KEY } }),
   ])
 
   const aboutValues = Object.fromEntries(aboutRows.map((r) => [r.key, r.value]))
   const aboutSettings: AboutSettings = { ...aboutDefaults, ...aboutValues }
+  const pivotHospitals = pivotRow?.value ?? PIVOT_HOSPITALS_DEFAULT
 
   const heroStats = stats.filter((s) => s.section === 'HERO').map((s) => ({ id: s.id, value: s.value, label: s.label }))
   const aboutStats = stats.filter((s) => s.section === 'ABOUT').map((s) => ({ id: s.id, value: s.value, label: s.label }))
@@ -45,6 +49,8 @@ export default async function AdminContent() {
         </div>
 
         <AboutSection settings={aboutSettings} />
+
+        <PivotHospitalsSection value={pivotHospitals} />
       </div>
     </div>
   )

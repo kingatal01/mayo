@@ -232,6 +232,23 @@ export async function moveStat(id: number, direction: 'up' | 'down'): Promise<Ac
 
 /* ------------------------------ À propos ------------------------------- */
 
+export async function updatePivotHospitals(value: string): Promise<ActionResult> {
+  try {
+    await prisma.setting.upsert({
+      where: { key: 'pivot_hospitals' },
+      update: { value: value.trim() },
+      create: { key: 'pivot_hospitals', value: value.trim() },
+    })
+  } catch (e) {
+    console.error('updatePivotHospitals:', e)
+    return { ok: false, error: 'Une erreur est survenue.' }
+  }
+  revalidatePath('/entreprises')
+  revalidatePath('/evasan')
+  revalidatePath('/admin', 'layout')
+  return { ok: true }
+}
+
 export async function updateAboutSettings(values: Record<string, string>): Promise<ActionResult> {
   const allowed = [
     'about_title',

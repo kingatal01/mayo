@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import SiteLayout from '@/components/SiteLayout'
+import { getPivotHospitals } from '@/lib/settings'
 
 export const metadata: Metadata = {
   title: 'Entreprises & Institutions | Mayo Klinic',
@@ -45,9 +46,8 @@ const offres = [
   },
 ]
 
-const hopitaux = ['Tunis', 'Casablanca', 'Johannesburg', 'Nairobi', 'Europe', 'Turquie']
-
-export default function EntreprisesPage() {
+export default async function EntreprisesPage() {
+  const hopitaux = await getPivotHospitals()
   return (
     <SiteLayout>
       <header className="bg-gradient-to-br from-[#0d2d6b] to-[#1D6FA4] py-20">

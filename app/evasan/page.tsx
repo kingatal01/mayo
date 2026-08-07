@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import SiteLayout from '@/components/SiteLayout'
+import { getPivotHospitals } from '@/lib/settings'
 
 export const metadata: Metadata = {
   title: 'Évacuation sanitaire internationale (EVASAN) | Mayo Klinic',
@@ -30,9 +31,8 @@ const etapes = [
   },
 ]
 
-const hopitaux = ['Tunis', 'Casablanca', 'Johannesburg', 'Nairobi', 'Europe', 'Turquie']
-
-export default function EvasanPage() {
+export default async function EvasanPage() {
+  const hopitaux = await getPivotHospitals()
   return (
     <SiteLayout>
       <header className="bg-gradient-to-br from-[#0d2d6b] to-[#1D6FA4] py-20">
