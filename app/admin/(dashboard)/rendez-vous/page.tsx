@@ -98,7 +98,7 @@ export default async function AdminAppointments({
                     <td className="px-6 py-3.5 text-gray-500 whitespace-nowrap">{a.specialty}</td>
                     <td className="px-6 py-3.5 text-gray-500 whitespace-nowrap">{formatDate(a.date)}</td>
                     <td className="px-6 py-3.5 text-gray-500 hidden xl:table-cell max-w-xs truncate">
-                      {a.message ?? '—'}
+                      {a.message ?? '-'}
                     </td>
                     <td className="px-6 py-3.5">
                       <span className={`px-2.5 py-1 rounded-full text-xs font-semibold whitespace-nowrap ${statusStyles[a.status]}`}>

@@ -4,7 +4,7 @@ import { prisma } from '@/lib/prisma'
 import { getCurrentUser } from '@/lib/session'
 
 export const metadata = {
-  title: 'Administration — Mayo Klinic',
+  title: 'Administration | Mayo Klinic',
 }
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {

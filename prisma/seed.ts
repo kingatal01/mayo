@@ -23,7 +23,7 @@ const specialties = [
   { title: 'Chirurgie Vasculaire', description: "Traitement des maladies des artères et veines : varices, artérite, anévrysme de l'aorte et thrombose veineuse profonde.", color: 'bg-rose-50 text-rose-500 group-hover:bg-rose-500 group-hover:text-white' },
   { title: 'Médecine du Travail', description: 'Surveillance de la santé des salariés, prévention des risques professionnels, aptitude au poste et accompagnement des travailleurs.', color: 'bg-cyan-50 text-cyan-500 group-hover:bg-cyan-500 group-hover:text-white' },
   { title: 'Gastro-Entérologie', description: 'Exploration et traitement des maladies digestives : ulcères, coloscopie, maladie de Crohn, hépatite et reflux gastro-œsophagien.', color: 'bg-green-50 text-green-500 group-hover:bg-green-500 group-hover:text-white' },
-  { title: 'MPR — Médecine Physique & Réadaptation', description: "Rééducation fonctionnelle après AVC, traumatismes, chirurgies orthopédiques et maladies neurologiques pour retrouver l'autonomie.", color: 'bg-emerald-50 text-emerald-500 group-hover:bg-emerald-500 group-hover:text-white' },
+  { title: 'MPR : Médecine Physique & Réadaptation', description: "Rééducation fonctionnelle après AVC, traumatismes, chirurgies orthopédiques et maladies neurologiques pour retrouver l'autonomie.", color: 'bg-emerald-50 text-emerald-500 group-hover:bg-emerald-500 group-hover:text-white' },
   { title: 'Urologie', description: "Soins des voies urinaires et de l'appareil génital masculin : lithiases rénales, prostate, infections urinaires et incontinence.", color: 'bg-blue-50 text-blue-500 group-hover:bg-blue-500 group-hover:text-white' },
   { title: 'Hématologie', description: 'Diagnostic et traitement des maladies du sang et de la moelle osseuse : anémies, leucémies, lymphomes et troubles de la coagulation.', color: 'bg-red-50 text-red-500 group-hover:bg-red-600 group-hover:text-white' },
   { title: 'Expertise Médicale', description: "Évaluations médico-légales, expertises d'incapacité, certificats médicaux et bilans pour assurances, tribunaux et organismes sociaux.", color: 'bg-slate-50 text-slate-500 group-hover:bg-slate-500 group-hover:text-white' },
@@ -99,7 +99,7 @@ const settings = [
   { key: 'address', value: "Boulevard du Maréchal Idriss Déby Itno, Quartier Sabangali, N'Djamena, Tchad" },
   { key: 'latitude', value: '12.0969048' },
   { key: 'longitude', value: '15.0590096' },
-  { key: 'hours', value: 'Lun–Ven : 08h30 – 16h30 · Sam : 08h30 – 13h00' },
+  { key: 'hours', value: 'Lun. à Ven. : 08h30 à 16h30, Sam. : 08h30 à 13h00' },
   { key: 'emergency', value: '24h/24 et 7j/7' },
   { key: 'facebook', value: '' },
   { key: 'twitter', value: '' },
@@ -107,7 +107,7 @@ const settings = [
   // Section À propos
   { key: 'about_title', value: "Une clinique pensée pour l'excellence médicale" },
   { key: 'about_paragraph1', value: "La Mayo Klinic de Sabangali (N'Djamena, Tchad) est une structure hospitalière haut de gamme dotée d'un plateau technique avancé, dédiée aux urgences, aux soins critiques, aux interventions chirurgicales et aux consultations spécialisées." },
-  { key: 'about_paragraph2', value: "Notre mission est simple : garantir à chaque patient un accès rapide, sûr et maîtrisé à des soins de qualité — que ce soit pour une urgence, un suivi chronique, un bilan médical d'entreprise ou une évacuation sanitaire internationale." },
+  { key: 'about_paragraph2', value: "Notre mission est simple : garantir à chaque patient un accès rapide, sûr et maîtrisé à des soins de qualité, que ce soit pour une urgence, un suivi chronique, un bilan médical d'entreprise ou une évacuation sanitaire internationale." },
   { key: 'about_image', value: '/image_face.jpeg' },
   { key: 'about_badge1_value', value: '24/7' },
   { key: 'about_badge1_label', value: 'Urgences & soins critiques' },
@@ -117,7 +117,7 @@ const settings = [
 
 const heroSlides = [
   {
-    tag: 'Mayo Klinic — Sabangali, N\'Djamena',
+    tag: 'Mayo Klinic · Sabangali, N\'Djamena',
     title: "La médecine d'excellence, au cœur de N'Djamena",
     description: "Structure hospitalière haut de gamme dotée d'un plateau technique avancé : urgences, soins critiques, chirurgie et consultations spécialisées, disponibles 24h/24 et 7j/7.",
     ctaLabel: 'Prendre rendez-vous',
@@ -188,7 +188,7 @@ async function main() {
   }
   console.log(`✔ ${settings.length} paramètres`)
 
-  // Hero et statistiques : contenu canonique du client — on remplace à chaque seed.
+  // Hero et statistiques : contenu canonique du client, remplacé à chaque seed.
   await prisma.heroSlide.deleteMany()
   await prisma.heroSlide.createMany({ data: heroSlides.map((s, i) => ({ ...s, order: i })) })
   console.log(`✔ ${heroSlides.length} slides Hero`)

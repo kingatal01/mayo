@@ -25,7 +25,7 @@ export async function login(formData: FormData): Promise<LoginResult> {
   try {
     user = await prisma.user.findUnique({ where: { email } })
   } catch (e) {
-    console.error('[login] ÉCHEC accès base de données —', safeDbTarget())
+    console.error('[login] ÉCHEC accès base de données :', safeDbTarget())
     console.error('[login] détail :', e)
     return {
       ok: false,

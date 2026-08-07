@@ -21,7 +21,7 @@ export default function About({ content, stats }: { content: AboutContent; stats
           {/* Image side */}
           <div className="relative">
             <div className="rounded-2xl overflow-hidden aspect-[4/3] relative shadow-xl">
-              <Image src={content.image} alt="Mayo Klinic — Façade" fill className="object-cover object-center" />
+              <Image src={content.image} alt="Façade Mayo Klinic" fill className="object-cover object-center" />
               {/* subtle overlay */}
               <div className="absolute inset-0 bg-[#0d2d6b]/10" />
             </div>

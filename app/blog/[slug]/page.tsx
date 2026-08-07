@@ -21,9 +21,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params
   const post = await prisma.blogPost.findUnique({ where: { slug } })
-  if (!post) return { title: 'Article introuvable — Mayo Klinic' }
+  if (!post) return { title: 'Article introuvable | Mayo Klinic' }
   return {
-    title: `${post.title} — Mayo Klinic`,
+    title: `${post.title} | Mayo Klinic`,
     description: post.excerpt,
   }
 }

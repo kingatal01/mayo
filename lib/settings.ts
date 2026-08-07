@@ -17,7 +17,7 @@ export type SiteSettings = {
 const defaults: SiteSettings = {
   phone: '(235) 30031414 / 65173434',
   email: 'contact@mayoklinic.td',
-  address: "Quartier Ardep-djoumal, 3ème Arrondissement — N'Djamena, Tchad",
+  address: "Quartier Ardep-djoumal, 3ème Arrondissement, N'Djamena, Tchad",
   latitude: '12.0969048',
   longitude: '15.0590096',
   hours: 'Lun–Sam : 8h00 – 18h00',

@@ -56,7 +56,7 @@ export default function Appointment({
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-          {/* Left — Map + Contact info */}
+          {/* Colonne gauche : carte + coordonnées */}
           <div className="flex flex-col gap-6">
             {/* Google Maps embed */}
             <div className="rounded-2xl overflow-hidden shadow-sm border border-gray-100 h-80 lg:h-96">
@@ -149,7 +149,7 @@ export default function Appointment({
             </a>
           </div>
 
-          {/* Right — Appointment form */}
+          {/* Colonne droite : formulaire de rendez-vous */}
           <div className="bg-gray-50 rounded-2xl p-8 shadow-sm">
             {sent ? (
               <div className="text-center py-12">

@@ -140,7 +140,7 @@ export default function TestimonialsManager({ testimonials }: { testimonials: Te
                 </div>
                 <div>
                   <div className="font-bold text-gray-800 text-sm">{t.name}</div>
-                  <div className="text-gray-400 text-xs">{t.role || '—'}</div>
+                  <div className="text-gray-400 text-xs">{t.role || '-'}</div>
                 </div>
               </div>
               <button

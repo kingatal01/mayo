@@ -33,7 +33,7 @@ export default function FAQ({ faqs }: { faqs: PublicFaq[] }) {
             </div>
           </div>
 
-          {/* Right column — accordion */}
+          {/* Colonne droite : accordéon */}
           <div className="space-y-4">
             {faqs.map((faq, i) => (
               <div key={faq.id} className="bg-white rounded-xl overflow-hidden shadow-sm">

@@ -44,7 +44,7 @@ export default function Footer({
               />
               <div>
                 <div className="text-xl font-bold text-white leading-tight">Mayo Klinic</div>
-                <div className="text-blue-400 text-xs tracking-widest">N'DJAMENA — TCHAD</div>
+                <div className="text-blue-400 text-xs tracking-widest">N'DJAMENA, TCHAD</div>
               </div>
             </div>
             <p className="text-sm leading-relaxed mb-4">
@@ -151,7 +151,7 @@ export default function Footer({
       {/* Bottom bar */}
       <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 py-5 flex flex-col sm:flex-row justify-between items-center gap-2 text-sm text-gray-400">
-          <p>&copy; {new Date().getFullYear()} Mayo Klinic — N'Djamena, Tchad. Tous droits réservés.</p>
+          <p>&copy; {new Date().getFullYear()} Mayo Klinic, N'Djamena, Tchad. Tous droits réservés.</p>
         </div>
       </div>
     </footer>

@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import SiteLayout from '@/components/SiteLayout'
 
 export const metadata: Metadata = {
-  title: 'Urgences 24h/24 — Mayo Klinic',
+  title: 'Urgences 24h/24 | Mayo Klinic',
   description:
     "Les urgences de la Mayo Klinic sont ouvertes 24h/24 et 7j/7. Prise en charge immédiate, ambulance médicalisée, bloc opératoire et soins intensifs à N'Djamena.",
 }

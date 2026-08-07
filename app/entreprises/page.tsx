@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import SiteLayout from '@/components/SiteLayout'
 
 export const metadata: Metadata = {
-  title: 'Entreprises & Institutions — Mayo Klinic',
+  title: 'Entreprises & Institutions | Mayo Klinic',
   description:
     "Solutions santé sur-mesure pour entreprises, organisations internationales, ambassades et écoles au Tchad : médecine du travail, abonnements corporate, cliniques mobiles, CaseVac/MedEvac.",
 }
@@ -17,7 +17,7 @@ const offres = [
   },
   {
     title: 'Formules d’abonnement corporate',
-    text: 'Un accès simplifié aux soins pour vos équipes, avec une prise en charge administrative fluide (garantie de paiement, tiers-payant) qui élimine les démarches complexes en cas d’urgence — salariés en poste, en mission courte, ou leurs familles.',
+    text: 'Un accès simplifié aux soins pour vos équipes, avec une prise en charge administrative fluide (garantie de paiement, tiers-payant) qui élimine les démarches complexes en cas d’urgence : salariés en poste, en mission courte, ou leurs familles.',
     icon: (
       <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
     ),

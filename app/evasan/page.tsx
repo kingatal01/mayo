@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import SiteLayout from '@/components/SiteLayout'
 
 export const metadata: Metadata = {
-  title: 'Évacuation sanitaire internationale (EVASAN) — Mayo Klinic',
+  title: 'Évacuation sanitaire internationale (EVASAN) | Mayo Klinic',
   description:
     "La Mayo Klinic organise une évacuation sanitaire internationale complète et sécurisée : dédouanement médical, coordination avec votre assurance, surveillance et transfert vers nos hôpitaux pivots.",
 }

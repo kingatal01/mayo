@@ -3,7 +3,7 @@ import SiteLayout from '@/components/SiteLayout'
 import { prisma } from '@/lib/prisma'
 
 export const metadata: Metadata = {
-  title: 'Nos Services — Mayo Klinic',
+  title: 'Nos Services | Mayo Klinic',
   description:
     "De la médecine d'urgence aux spécialités les plus pointues, la Mayo Klinic réunit une large gamme de services médicaux et chirurgicaux sous un même toit.",
 }

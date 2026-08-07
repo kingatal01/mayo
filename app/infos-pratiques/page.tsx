@@ -2,14 +2,14 @@ import type { Metadata } from 'next'
 import SiteLayout from '@/components/SiteLayout'
 
 export const metadata: Metadata = {
-  title: 'Informations pratiques — Mayo Klinic',
+  title: 'Informations pratiques | Mayo Klinic',
   description:
     "Horaires d'ouverture de la Mayo Klinic et organisation de la prise en charge. Urgences ouvertes 24h/24 et 7j/7 à N'Djamena.",
 }
 
 const horaires = [
-  { periode: 'Lundi à Vendredi', valeur: '08h30 – 16h30' },
-  { periode: 'Samedi', valeur: '08h30 – 13h00' },
+  { periode: 'Lundi à Vendredi', valeur: '08h30 à 16h30' },
+  { periode: 'Samedi', valeur: '08h30 à 13h00' },
   { periode: 'Dimanche & jours fériés', valeur: 'Urgences uniquement' },
   { periode: 'Nuit', valeur: 'Urgences uniquement' },
 ]
@@ -75,7 +75,7 @@ export default function InfosPratiquesPage() {
             <h2 className="section-title mt-2 mb-6">Comment s’organise votre prise en charge</h2>
             <p className="text-gray-500 leading-relaxed mb-6">
               Nos équipes accompagnent chaque patient hospitalisé tout au long de son séjour, avec pour objectif un retour
-              rapide et sécurisé à l’autonomie — ou l’orientation vers la structure la plus adaptée, localement ou à
+              rapide et sécurisé à l’autonomie, ou l’orientation vers la structure la plus adaptée, localement ou à
               l’international si nécessaire.
             </p>
             <div className="bg-[#0d2d6b] text-white rounded-2xl p-8">
