@@ -2,12 +2,13 @@ import Image from 'next/image'
 import { telHref, type SiteSettings } from '@/lib/settings'
 
 const quickLinks = [
-  { label: 'Accueil', href: '#home' },
-  { label: 'À propos', href: '#about' },
-  { label: 'Spécialités', href: '#service' },
-  { label: 'Médecins', href: '#doctor' },
-  { label: 'Blog', href: '#blog' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Accueil', href: '/' },
+  { label: 'Urgences', href: '/urgences' },
+  { label: 'Nos services', href: '/services' },
+  { label: 'Entreprises', href: '/entreprises' },
+  { label: 'EVASAN', href: '/evasan' },
+  { label: 'Infos pratiques', href: '/infos-pratiques' },
+  { label: 'Contact', href: '/#contact' },
 ]
 
 const socialPaths: Record<string, string> = {
