@@ -6,10 +6,10 @@ import Image from 'next/image'
 const navLinks = [
   { label: 'Accueil', href: '/' },
   { label: 'Urgences', href: '/urgences' },
+  { label: 'Entreprises', href: '/entreprises' },
   { label: 'À propos', href: '/#about' },
   { label: 'Spécialités', href: '/#service' },
   { label: 'Médecins', href: '/#doctor' },
-  { label: 'Blog', href: '/#blog' },
   { label: 'Contact', href: '/#contact' },
 ]
 
