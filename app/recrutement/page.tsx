@@ -53,9 +53,11 @@ export default async function RecrutementPage() {
               Aucune offre ouverte pour le moment. Revenez bientôt.
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="flex flex-wrap justify-center gap-6">
               {sorted.map((o) => (
-                <JobCard key={o.id} job={o} closed={!isOfferOpen(o)} />
+                <div key={o.id} className="w-full sm:w-[340px]">
+                  <JobCard job={o} closed={!isOfferOpen(o)} />
+                </div>
               ))}
             </div>
           )}
