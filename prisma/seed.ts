@@ -1,11 +1,9 @@
 import 'dotenv/config'
 import bcrypt from 'bcryptjs'
-import { PrismaMariaDb } from '@prisma/adapter-mariadb'
 import { PrismaClient } from '../lib/generated/prisma/client'
+import { createMariaDbAdapter } from '../lib/mariadb'
 
-const prisma = new PrismaClient({
-  adapter: new PrismaMariaDb(process.env.DATABASE_URL as string),
-})
+const prisma = new PrismaClient({ adapter: createMariaDbAdapter() })
 
 const specialties = [
   { title: 'Ophtalmologie', description: 'Diagnostic et traitement des maladies oculaires : troubles de la vision, glaucome, cataracte, rétine et chirurgie réfractive.', color: 'bg-sky-50 text-sky-500 group-hover:bg-sky-500 group-hover:text-white' },

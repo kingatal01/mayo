@@ -1,13 +1,11 @@
 import 'dotenv/config'
 import bcrypt from 'bcryptjs'
-import { PrismaMariaDb } from '@prisma/adapter-mariadb'
 import { PrismaClient } from '../lib/generated/prisma/client'
+import { createMariaDbAdapter } from '../lib/mariadb'
 
 // Réinitialise (ou crée) le compte administrateur à partir des variables
-// ADMIN_EMAIL / ADMIN_PASSWORD du fichier .env. À lancer via `npm run db:reset-admin`.
-const prisma = new PrismaClient({
-  adapter: new PrismaMariaDb(process.env.DATABASE_URL as string),
-})
+// ADMIN_EMAIL / ADMIN_PASSWORD du fichier .env. À lancer via `yarn db:reset-admin`.
+const prisma = new PrismaClient({ adapter: createMariaDbAdapter() })
 
 async function main() {
   const email = 'admin@mayoklinic.td'.toLowerCase()
