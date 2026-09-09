@@ -24,6 +24,57 @@ enum Role {
   EDITOR
 }
 
+enum JobType {
+  CDI
+  CDD
+  STAGE
+  TEMPS_PARTIEL
+  CONSULTANT
+}
+
+enum ApplicationStatus {
+  NEW
+  REVIEWED
+  SHORTLISTED
+  REJECTED
+}
+
+model JobOffer {
+  id           Int              @id @default(autoincrement())
+  title        String
+  slug         String           @unique
+  department   String
+  location     String           @default("N'Djamena, Tchad")
+  type         JobType          @default(CDI)
+  description  String           @db.LongText
+  profile      String           @db.LongText
+  published    Boolean          @default(false)
+  publishedAt  DateTime?
+  closingDate  DateTime?        @db.Date
+  order        Int              @default(0)
+  applications JobApplication[]
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+
+  @@map("job_offers")
+}
+
+model JobApplication {
+  id        Int               @id @default(autoincrement())
+  offerId   Int
+  offer     JobOffer          @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  name      String
+  email     String
+  phone     String?
+  message   String?           @db.Text
+  cvPath    String?
+  status    ApplicationStatus @default(NEW)
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+
+  @@map("job_applications")
+}
+
 model User {
   id           Int       @id @default(autoincrement())
   name         String

@@ -208,6 +208,25 @@ async function main() {
   }
   console.log(`✔ ${stats.length} statistiques`)
 
+  if ((await prisma.jobOffer.count()) === 0) {
+    await prisma.jobOffer.create({
+      data: {
+        title: 'Médecin urgentiste',
+        slug: 'medecin-urgentiste',
+        department: 'Médical',
+        location: "N'Djamena, Tchad",
+        type: 'CDI',
+        description:
+          "Au sein de notre service des urgences ouvert 24h/24, vous assurez la prise en charge immédiate des urgences vitales (traumatismes, infarctus, AVC, détresses respiratoires), la stabilisation des patients et la coordination avec le bloc opératoire et l'unité de soins intensifs.",
+        profile:
+          "Doctorat en médecine, spécialisation ou expérience en médecine d'urgence, capacité à travailler en équipe et sous pression, inscription à l'Ordre des médecins requise.",
+        published: true,
+        publishedAt: new Date(),
+      },
+    })
+  }
+  console.log('✔ offre de recrutement (exemple)')
+
   // Utilisateur admin initial (identifiants depuis .env, avec repli).
   const adminEmail =  'admin@mayoklinic.td'.toLowerCase()
   const adminPassword = 'mayoklinic2026'

@@ -7,6 +7,7 @@ const quickLinks = [
   { label: 'Nos services', href: '/services' },
   { label: 'Entreprises', href: '/entreprises' },
   { label: 'EVASAN', href: '/evasan' },
+  { label: 'Recrutement', href: '/recrutement' },
   { label: 'Infos pratiques', href: '/infos-pratiques' },
   { label: 'Contact', href: '/#contact' },
 ]

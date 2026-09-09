@@ -5,4 +5,5 @@ node_modules
 .env.local
 /lib/generated
 /public/uploads
+/private_uploads
 tsconfig.tsbuildinfo

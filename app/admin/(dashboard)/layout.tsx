@@ -11,10 +11,13 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const user = await getCurrentUser()
   if (!user) redirect('/admin/login')
 
-  const pendingCount = await prisma.appointment.count({ where: { status: 'PENDING' } })
+  const [pendingCount, newApplicationsCount] = await Promise.all([
+    prisma.appointment.count({ where: { status: 'PENDING' } }),
+    prisma.jobApplication.count({ where: { status: 'NEW' } }),
+  ])
 
   return (
-    <AdminShell pendingCount={pendingCount} user={user}>
+    <AdminShell pendingCount={pendingCount} newApplicationsCount={newApplicationsCount} user={user}>
       {children}
     </AdminShell>
   )

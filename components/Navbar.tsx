@@ -9,7 +9,7 @@ const navLinks = [
   { label: 'Services', href: '/services' },
   { label: 'Entreprises', href: '/entreprises' },
   { label: 'EVASAN', href: '/evasan' },
-  { label: 'À propos', href: '/#about' },
+  { label: 'Recrutement', href: '/recrutement' },
   { label: 'Contact', href: '/#contact' },
 ]
 
