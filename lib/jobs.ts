@@ -14,6 +14,17 @@ export function openOffersWhere() {
   }
 }
 
+// Clause Prisma : offres à lister sur la page /recrutement — publiées et déjà
+// ouvertes (openingDate passée ou nulle), qu'elles soient encore ouvertes ou
+// closes. Les offres pas encore ouvertes restent masquées.
+export function listedOffersWhere() {
+  const now = new Date()
+  return {
+    published: true,
+    OR: [{ openingDate: null }, { openingDate: { lte: now } }],
+  }
+}
+
 // Vrai si une offre est actuellement ouverte aux candidatures.
 export function isOfferOpen(offer: {
   published: boolean

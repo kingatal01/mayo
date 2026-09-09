@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import SiteLayout from '@/components/SiteLayout'
 import JobCard from '@/components/JobCard'
 import { prisma } from '@/lib/prisma'
-import { openOffersWhere } from '@/lib/jobs'
+import { listedOffersWhere, isOfferOpen } from '@/lib/jobs'
 
 export const metadata: Metadata = {
   title: 'Recrutement | Mayo Klinic',
@@ -12,10 +12,24 @@ export const metadata: Metadata = {
 
 export default async function RecrutementPage() {
   const offers = await prisma.jobOffer.findMany({
-    where: openOffersWhere(),
+    where: listedOffersWhere(),
     orderBy: [{ order: 'asc' }, { createdAt: 'desc' }],
-    select: { id: true, title: true, slug: true, department: true, location: true, type: true, image: true },
+    select: {
+      id: true,
+      title: true,
+      slug: true,
+      department: true,
+      location: true,
+      type: true,
+      image: true,
+      published: true,
+      openingDate: true,
+      closingDate: true,
+    },
   })
+
+  // Les offres ouvertes d'abord, les closes ensuite.
+  const sorted = [...offers].sort((a, b) => Number(isOfferOpen(b)) - Number(isOfferOpen(a)))
 
   return (
     <SiteLayout>
@@ -40,8 +54,8 @@ export default async function RecrutementPage() {
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {offers.map((o) => (
-                <JobCard key={o.id} job={o} />
+              {sorted.map((o) => (
+                <JobCard key={o.id} job={o} closed={!isOfferOpen(o)} />
               ))}
             </div>
           )}
