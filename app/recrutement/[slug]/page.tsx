@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation'
 import SiteLayout from '@/components/SiteLayout'
 import JobApplicationForm from '@/components/JobApplicationForm'
 import { prisma } from '@/lib/prisma'
-import { jobTypeLabels } from '@/lib/jobs'
+import { jobTypeLabels, isOfferOpen } from '@/lib/jobs'
 
 function formatDate(d: Date | null) {
   if (!d) return null
@@ -29,6 +29,7 @@ export default async function JobOfferPage({ params }: { params: Promise<{ slug:
   const offer = await prisma.jobOffer.findUnique({ where: { slug } })
   if (!offer || !offer.published) notFound()
 
+  const open = isOfferOpen(offer)
   const closing = formatDate(offer.closingDate)
 
   return (
@@ -99,7 +100,19 @@ export default async function JobOfferPage({ params }: { params: Promise<{ slug:
           {/* Formulaire */}
           <div className="lg:col-span-2">
             <div className="bg-gray-50 rounded-2xl p-6 lg:sticky lg:top-24">
-              <JobApplicationForm offerId={offer.id} />
+              {open ? (
+                <JobApplicationForm offerId={offer.id} />
+              ) : (
+                <div className="text-center py-6">
+                  <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <svg className="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                    </svg>
+                  </div>
+                  <h3 className="font-bold text-gray-800 mb-1">Candidatures closes</h3>
+                  <p className="text-sm text-gray-500">Les candidatures pour cette offre ne sont plus ouvertes.</p>
+                </div>
+              )}
             </div>
           </div>
         </div>

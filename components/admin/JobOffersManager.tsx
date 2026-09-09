@@ -9,6 +9,7 @@ import {
   type JobInput,
 } from '@/lib/actions/admin-jobs'
 import { jobTypeLabels } from '@/lib/jobs'
+import ImageUpload from '@/components/admin/ImageUpload'
 import type { JobType } from '@/lib/generated/prisma/enums'
 
 export type JobRow = {
@@ -18,9 +19,11 @@ export type JobRow = {
   department: string
   location: string
   type: JobType
+  image: string | null
   description: string
   missions: string | null
   profile: string
+  openingDate: Date | null
   closingDate: Date | null
   published: boolean
   applicationsCount: number
@@ -31,9 +34,11 @@ const emptyForm: JobInput = {
   department: '',
   location: "N'Djamena, Tchad",
   type: 'CDI',
+  image: null,
   description: '',
   missions: '',
   profile: '',
+  openingDate: '',
   closingDate: '',
   published: true,
 }
@@ -67,9 +72,11 @@ export default function JobOffersManager({ offers }: { offers: JobRow[] }) {
       department: o.department,
       location: o.location,
       type: o.type,
+      image: o.image,
       description: o.description,
       missions: o.missions ?? '',
       profile: o.profile,
+      openingDate: toDateInput(o.openingDate),
       closingDate: toDateInput(o.closingDate),
       published: o.published,
     })
@@ -231,15 +238,23 @@ export default function JobOffersManager({ offers }: { offers: JobRow[] }) {
                   </select>
                 </div>
               </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Lieu</label>
+                <input value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })} className={inputClass} />
+              </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Lieu</label>
-                  <input value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })} className={inputClass} />
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Date d&apos;ouverture</label>
+                  <input type="date" value={form.openingDate} onChange={(e) => setForm({ ...form, openingDate: e.target.value })} className={inputClass} />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Date limite de candidature</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Date de clôture</label>
                   <input type="date" value={form.closingDate} onChange={(e) => setForm({ ...form, closingDate: e.target.value })} className={inputClass} />
                 </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Image de l&apos;annonce (optionnelle)</label>
+                <ImageUpload value={form.image ?? ''} onChange={(value) => setForm({ ...form, image: value || null })} />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Présentation du poste *</label>

@@ -46,11 +46,13 @@ model JobOffer {
   department   String
   location     String           @default("N'Djamena, Tchad")
   type         JobType          @default(CDI)
+  image        String?
   description  String           @db.LongText
   missions     String?          @db.LongText
   profile      String           @db.LongText
   published    Boolean          @default(false)
   publishedAt  DateTime?
+  openingDate  DateTime?        @db.Date
   closingDate  DateTime?        @db.Date
   order        Int              @default(0)
   applications JobApplication[]

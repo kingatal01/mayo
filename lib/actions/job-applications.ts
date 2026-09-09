@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { promises as fs } from 'fs'
 import path from 'path'
 import { prisma } from '@/lib/prisma'
+import { isOfferOpen } from '@/lib/jobs'
 import type { ApplicationStatus } from '@/lib/generated/prisma/enums'
 
 export type ApplyResult = { ok: true } | { ok: false; error: string }
@@ -45,8 +46,8 @@ export async function submitApplication(formData: FormData): Promise<ApplyResult
   }
 
   const offer = await prisma.jobOffer.findUnique({ where: { id: offerId } })
-  if (!offer || !offer.published) {
-    return { ok: false, error: "Cette offre n'est plus disponible." }
+  if (!offer || !isOfferOpen(offer)) {
+    return { ok: false, error: "Cette offre n'est plus ouverte aux candidatures." }
   }
 
   let cvPath: string | null = null

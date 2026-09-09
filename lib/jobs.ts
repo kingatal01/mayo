@@ -1,5 +1,33 @@
 import type { JobType, ApplicationStatus } from '@/lib/generated/prisma/enums'
 
+// Clause Prisma : offres actuellement ouvertes (publiées et dans la période
+// ouverture <= aujourd'hui <= clôture). Les dates nulles ne bornent pas.
+export function openOffersWhere() {
+  const now = new Date()
+  const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+  return {
+    published: true,
+    AND: [
+      { OR: [{ openingDate: null }, { openingDate: { lte: now } }] },
+      { OR: [{ closingDate: null }, { closingDate: { gte: startOfToday } }] },
+    ],
+  }
+}
+
+// Vrai si une offre est actuellement ouverte aux candidatures.
+export function isOfferOpen(offer: {
+  published: boolean
+  openingDate: Date | null
+  closingDate: Date | null
+}): boolean {
+  if (!offer.published) return false
+  const now = new Date()
+  const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+  if (offer.openingDate && new Date(offer.openingDate) > now) return false
+  if (offer.closingDate && new Date(offer.closingDate) < startOfToday) return false
+  return true
+}
+
 export const jobTypeLabels: Record<JobType, string> = {
   CDI: 'CDI',
   CDD: 'CDD',

@@ -9,6 +9,7 @@ import FAQ from '@/components/FAQ'
 import Team from '@/components/Team'
 import Newsletter from '@/components/Newsletter'
 import Blog from '@/components/Blog'
+import Recruitment from '@/components/Recruitment'
 import Appointment from '@/components/Appointment'
 import Footer from '@/components/Footer'
 import { prisma } from '@/lib/prisma'
@@ -68,6 +69,7 @@ export default async function Home() {
       <Testimonials testimonials={testimonials} />
       <FAQ faqs={faqs} />
       <Team />
+      <Recruitment />
       <Newsletter phone={siteSettings.phone} />
       <Blog />
       <Appointment
