@@ -10,6 +10,7 @@ export type JobInput = {
   location: string
   type: JobType
   description: string
+  missions: string // une tâche par ligne
   profile: string
   closingDate: string // yyyy-mm-dd ou ''
   published: boolean
@@ -53,6 +54,7 @@ function toData(data: JobInput) {
     location: data.location.trim() || "N'Djamena, Tchad",
     type: data.type,
     description: data.description.trim(),
+    missions: data.missions.trim() || null,
     profile: data.profile.trim(),
     closingDate: data.closingDate ? new Date(data.closingDate) : null,
     published: data.published,

@@ -19,6 +19,7 @@ export type JobRow = {
   location: string
   type: JobType
   description: string
+  missions: string | null
   profile: string
   closingDate: Date | null
   published: boolean
@@ -31,6 +32,7 @@ const emptyForm: JobInput = {
   location: "N'Djamena, Tchad",
   type: 'CDI',
   description: '',
+  missions: '',
   profile: '',
   closingDate: '',
   published: true,
@@ -66,6 +68,7 @@ export default function JobOffersManager({ offers }: { offers: JobRow[] }) {
       location: o.location,
       type: o.type,
       description: o.description,
+      missions: o.missions ?? '',
       profile: o.profile,
       closingDate: toDateInput(o.closingDate),
       published: o.published,
@@ -239,8 +242,13 @@ export default function JobOffersManager({ offers }: { offers: JobRow[] }) {
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Description du poste *</label>
-                <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} required rows={5} placeholder="Missions, responsabilités..." className={`${inputClass} resize-y`} />
+                <label className="block text-sm font-medium text-gray-700 mb-1">Présentation du poste *</label>
+                <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} required rows={4} placeholder="Contexte et présentation générale du poste..." className={`${inputClass} resize-y`} />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Missions / tâches</label>
+                <textarea value={form.missions} onChange={(e) => setForm({ ...form, missions: e.target.value })} rows={5} placeholder="Une tâche par ligne :&#10;Assurer la prise en charge des urgences&#10;Coordonner avec le bloc opératoire&#10;..." className={`${inputClass} resize-y`} />
+                <p className="text-xs text-gray-400 mt-1">Une tâche par ligne : elles s&apos;affichent en liste à puces sur l&apos;offre.</p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Profil recherché</label>

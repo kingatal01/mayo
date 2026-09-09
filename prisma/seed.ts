@@ -217,7 +217,9 @@ async function main() {
         location: "N'Djamena, Tchad",
         type: 'CDI',
         description:
-          "Au sein de notre service des urgences ouvert 24h/24, vous assurez la prise en charge immédiate des urgences vitales (traumatismes, infarctus, AVC, détresses respiratoires), la stabilisation des patients et la coordination avec le bloc opératoire et l'unité de soins intensifs.",
+          "Au sein de notre service des urgences ouvert 24h/24, vous prenez en charge les patients dès leur arrivée et coordonnez leur parcours de soins avec l'ensemble de l'équipe médicale.",
+        missions:
+          "Assurer la prise en charge immédiate des urgences vitales (traumatismes, infarctus, AVC, détresses respiratoires)\nStabiliser les patients et prescrire les bilans prioritaires (imagerie, biologie)\nCoordonner avec le bloc opératoire et l'unité de soins intensifs\nAssurer le suivi et l'orientation des patients\nParticiper à la permanence des soins 24h/24",
         profile:
           "Doctorat en médecine, spécialisation ou expérience en médecine d'urgence, capacité à travailler en équipe et sous pression, inscription à l'Ordre des médecins requise.",
         published: true,

@@ -15,6 +15,7 @@ export default async function AdminRecrutement() {
     location: o.location,
     type: o.type,
     description: o.description,
+    missions: o.missions,
     profile: o.profile,
     closingDate: o.closingDate,
     published: o.published,
