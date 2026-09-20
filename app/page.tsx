@@ -14,7 +14,7 @@ import Appointment from '@/components/Appointment'
 import Footer from '@/components/Footer'
 import { prisma } from '@/lib/prisma'
 import { getSiteSettings, socialLinks } from '@/lib/settings'
-import { getSectionHeadings } from '@/lib/section-headings'
+import { getSectionHeadings } from '@/lib/section-headings.server'
 
 export default async function Home() {
   const [specialties, testimonials, faqs, heroSlides, statRows, aboutSettings, siteSettings, headings] = await Promise.all([

@@ -1,8 +1,9 @@
-import { prisma } from '@/lib/prisma'
-
 // En-têtes des sections de la page d'accueil (surtitre / titre / sous-titre).
 // Stockés en paramètres libres sous la forme `section_<clé>_<champ>` afin de
 // rester éditables depuis Admin > Contenu sans migration de schéma.
+//
+// Ce fichier est importé par des composants client : il ne doit dépendre de
+// rien de côté serveur. La lecture en BD vit dans `section-headings.server.ts`.
 
 export type SectionHeading = {
   eyebrow: string
@@ -138,10 +139,4 @@ export function mergeSectionHeadings(values: Record<string, string>): SectionHea
     }
   }
   return headings
-}
-
-// Charge les en-têtes de sections depuis la BD (valeurs par défaut si absentes).
-export async function getSectionHeadings(): Promise<SectionHeadings> {
-  const rows = await prisma.setting.findMany({ where: { key: { in: SECTION_SETTING_KEYS } } })
-  return mergeSectionHeadings(Object.fromEntries(rows.map((r) => [r.key, r.value])))
 }

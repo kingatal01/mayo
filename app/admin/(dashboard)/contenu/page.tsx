@@ -5,7 +5,7 @@ import PivotHospitalsSection from '@/components/admin/PivotHospitalsSection'
 import SectionHeadingsSection from '@/components/admin/SectionHeadingsSection'
 import { prisma } from '@/lib/prisma'
 import { PIVOT_HOSPITALS_KEY, PIVOT_HOSPITALS_DEFAULT } from '@/lib/settings'
-import { getSectionHeadings } from '@/lib/section-headings'
+import { getSectionHeadings } from '@/lib/section-headings.server'
 
 const aboutDefaults: AboutSettings = {
   about_title: 'Bienvenue à Mayo Klinic',
