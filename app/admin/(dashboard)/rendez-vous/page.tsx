@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import PageHeader from '@/components/admin/PageHeader'
-import AppointmentMessage from '@/components/admin/AppointmentMessage'
+import MessageCell from '@/components/admin/MessageCell'
 import { prisma } from '@/lib/prisma'
 import { updateAppointmentStatus, deleteAppointment } from '@/lib/actions/admin-appointments'
 import { AppointmentStatus } from '@/lib/generated/prisma/enums'
@@ -99,12 +99,11 @@ export default async function AdminAppointments({
                     <td className="px-6 py-3.5 text-gray-500 whitespace-nowrap">{a.specialty}</td>
                     <td className="px-6 py-3.5 text-gray-500 whitespace-nowrap">{formatDate(a.date)}</td>
                     <td className="px-6 py-3.5 text-gray-500 hidden md:table-cell">
-                      <AppointmentMessage
-                        name={a.name}
+                      <MessageCell
+                        title={a.name}
+                        subtitle={`${a.specialty} · ${formatDate(a.date)}`}
                         email={a.email}
                         phone={a.phone}
-                        specialty={a.specialty}
-                        date={formatDate(a.date)}
                         message={a.message}
                       />
                     </td>

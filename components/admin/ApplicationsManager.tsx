@@ -3,6 +3,7 @@
 import { useMemo, useState, useTransition } from 'react'
 import { updateApplicationStatus, deleteApplication } from '@/lib/actions/job-applications'
 import { applicationStatusLabels, applicationStatusStyles } from '@/lib/jobs'
+import MessageCell from '@/components/admin/MessageCell'
 import type { ApplicationStatus } from '@/lib/generated/prisma/enums'
 
 export type ApplicationRow = {
@@ -86,6 +87,7 @@ export default function ApplicationsManager({ applications }: { applications: Ap
                   <th className="px-6 py-3 font-semibold">Candidat</th>
                   <th className="px-6 py-3 font-semibold hidden lg:table-cell">Offre</th>
                   <th className="px-6 py-3 font-semibold">Reçue le</th>
+                  <th className="px-6 py-3 font-semibold hidden md:table-cell">Motivation</th>
                   <th className="px-6 py-3 font-semibold">CV</th>
                   <th className="px-6 py-3 font-semibold">Statut</th>
                   <th className="px-6 py-3 font-semibold text-right">Actions</th>
@@ -107,6 +109,16 @@ export default function ApplicationsManager({ applications }: { applications: Ap
                       )}
                     </td>
                     <td className="px-6 py-3.5 text-gray-500 whitespace-nowrap">{formatDate(a.createdAt)}</td>
+                    <td className="px-6 py-3.5 text-gray-500 hidden md:table-cell">
+                      <MessageCell
+                        title={a.name}
+                        subtitle={`${a.offerTitle ?? 'Candidature spontanée'} · ${formatDate(a.createdAt)}`}
+                        email={a.email}
+                        phone={a.phone}
+                        message={a.message}
+                        emptyLabel="Aucune"
+                      />
+                    </td>
                     <td className="px-6 py-3.5">
                       {a.hasCv ? (
                         <a

@@ -2,19 +2,22 @@
 
 import { useEffect, useState } from 'react'
 
-export type AppointmentMessageProps = {
-  name: string
-  email: string
-  phone: string | null
-  specialty: string
-  /** Date souhaitée, déjà formatée côté serveur. */
-  date: string
+export type MessageCellProps = {
+  /** Auteur du message : nom du patient ou du candidat. */
+  title: string
+  /** Contexte affiché sous le nom, par exemple « Cardiologie · 12 oct. 2026 ». */
+  subtitle?: string
+  email?: string
+  phone?: string | null
   message: string | null
+  /** Texte affiché quand il n'y a pas de message. */
+  emptyLabel?: string
 }
 
-// Le message d'un patient tient rarement sur une ligne de tableau : on
-// n'affiche qu'un aperçu cliquable qui ouvre le texte complet dans une modale.
-export default function AppointmentMessage({ name, email, phone, specialty, date, message }: AppointmentMessageProps) {
+// Un message libre (demande de rendez-vous, lettre de motivation) tient rarement
+// sur une ligne de tableau : on n'affiche qu'un aperçu cliquable qui ouvre le
+// texte complet dans une modale.
+export default function MessageCell({ title, subtitle, email, phone, message, emptyLabel = 'Aucun' }: MessageCellProps) {
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
@@ -26,7 +29,7 @@ export default function AppointmentMessage({ name, email, phone, specialty, date
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [open])
 
-  if (!message) return <span className="text-gray-300 text-xs">Aucun</span>
+  if (!message) return <span className="text-gray-300 text-xs">{emptyLabel}</span>
 
   return (
     <>
@@ -47,15 +50,13 @@ export default function AppointmentMessage({ name, email, phone, specialty, date
           <div
             role="dialog"
             aria-modal="true"
-            aria-label={`Message de ${name}`}
+            aria-label={`Message de ${title}`}
             className="relative bg-white rounded-2xl shadow-xl w-full max-w-lg p-6 max-h-[90vh] overflow-y-auto"
           >
             <div className="flex items-start justify-between gap-4 mb-4">
               <div>
-                <h2 className="text-lg font-bold text-gray-800">{name}</h2>
-                <p className="text-xs text-gray-400 mt-0.5">
-                  {specialty} · {date}
-                </p>
+                <h2 className="text-lg font-bold text-gray-800">{title}</h2>
+                {subtitle && <p className="text-xs text-gray-400 mt-0.5">{subtitle}</p>}
               </div>
               <button
                 onClick={() => setOpen(false)}
@@ -68,16 +69,20 @@ export default function AppointmentMessage({ name, email, phone, specialty, date
               </button>
             </div>
 
-            <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-500 mb-4">
-              <a href={`mailto:${email}`} className="hover:text-[#1D6FA4] hover:underline">
-                {email}
-              </a>
-              {phone && (
-                <a href={`tel:${phone.replace(/[^0-9+]/g, '')}`} className="hover:text-[#1D6FA4] hover:underline">
-                  {phone}
-                </a>
-              )}
-            </div>
+            {(email || phone) && (
+              <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-500 mb-4">
+                {email && (
+                  <a href={`mailto:${email}`} className="hover:text-[#1D6FA4] hover:underline">
+                    {email}
+                  </a>
+                )}
+                {phone && (
+                  <a href={`tel:${phone.replace(/[^0-9+]/g, '')}`} className="hover:text-[#1D6FA4] hover:underline">
+                    {phone}
+                  </a>
+                )}
+              </div>
+            )}
 
             <div className="bg-gray-50 rounded-xl p-4 text-sm text-gray-600 leading-relaxed whitespace-pre-wrap">
               {message}
