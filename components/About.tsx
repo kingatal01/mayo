@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import type { SectionHeading } from '@/lib/section-headings'
 
 export type AboutStat = { id: number; value: string; label: string }
 
@@ -13,7 +14,15 @@ export type AboutContent = {
   badge2Label: string
 }
 
-export default function About({ content, stats }: { content: AboutContent; stats: AboutStat[] }) {
+export default function About({
+  content,
+  stats,
+  heading,
+}: {
+  content: AboutContent
+  stats: AboutStat[]
+  heading: SectionHeading
+}) {
   return (
     <section id="about" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4">
@@ -55,7 +64,7 @@ export default function About({ content, stats }: { content: AboutContent; stats
 
           {/* Content side */}
           <div>
-            <span className="text-[#1D6FA4] font-semibold uppercase tracking-widest text-sm">À Propos</span>
+            <span className="text-[#1D6FA4] font-semibold uppercase tracking-widest text-sm">{heading.eyebrow}</span>
             <h2 className="section-title mt-2">{content.title}</h2>
             <p className="text-gray-500 mb-6 leading-relaxed">{content.paragraph1}</p>
             {content.paragraph2 && <p className="text-gray-500 mb-8 leading-relaxed">{content.paragraph2}</p>}

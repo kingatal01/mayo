@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import type { SectionHeading } from '@/lib/section-headings'
 
 export type PublicTestimonial = {
   id: number
@@ -12,7 +13,13 @@ export type PublicTestimonial = {
   rating: number
 }
 
-export default function Testimonials({ testimonials }: { testimonials: PublicTestimonial[] }) {
+export default function Testimonials({
+  testimonials,
+  heading,
+}: {
+  testimonials: PublicTestimonial[]
+  heading: SectionHeading
+}) {
   const [current, setCurrent] = useState(0)
   const perPage = 3
   const pages = Math.ceil(testimonials.length / perPage)
@@ -24,11 +31,9 @@ export default function Testimonials({ testimonials }: { testimonials: PublicTes
     <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-14">
-          <span className="text-[#1D6FA4] font-semibold uppercase tracking-widest text-sm">Témoignages</span>
-          <h2 className="section-title mt-2">Ce que disent nos patients</h2>
-          <p className="section-subtitle">
-            Des témoignages authentiques de patients ayant bénéficié de nos services de santé de qualité.
-          </p>
+          <span className="text-[#1D6FA4] font-semibold uppercase tracking-widest text-sm">{heading.eyebrow}</span>
+          <h2 className="section-title mt-2">{heading.title}</h2>
+          <p className="section-subtitle">{heading.subtitle}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">

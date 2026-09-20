@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
+import type { SectionHeading } from '@/lib/section-headings'
 
 function formatDate(d: Date | null) {
   if (!d) return ''
@@ -8,7 +9,7 @@ function formatDate(d: Date | null) {
   )
 }
 
-export default async function Blog() {
+export default async function Blog({ heading }: { heading: SectionHeading }) {
   const posts = await prisma.blogPost.findMany({
     where: { published: true },
     orderBy: [{ publishedAt: 'desc' }, { createdAt: 'desc' }],
@@ -21,11 +22,9 @@ export default async function Blog() {
     <section id="blog" className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-14">
-          <span className="text-[#1D6FA4] font-semibold uppercase tracking-widest text-sm">Notre Blog</span>
-          <h2 className="section-title mt-2">Dernières Actualités</h2>
-          <p className="section-subtitle">
-            Restez informé des dernières actualités médicales, conseils santé et recommandations bien-être de nos experts.
-          </p>
+          <span className="text-[#1D6FA4] font-semibold uppercase tracking-widest text-sm">{heading.eyebrow}</span>
+          <h2 className="section-title mt-2">{heading.title}</h2>
+          <p className="section-subtitle">{heading.subtitle}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

@@ -5,6 +5,7 @@ import { promises as fs } from 'fs'
 import path from 'path'
 import { prisma } from '@/lib/prisma'
 import { StatSection } from '@/lib/generated/prisma/enums'
+import { SECTION_SETTING_KEYS } from '@/lib/section-headings'
 
 export type ActionResult = { ok: true } | { ok: false; error: string }
 
@@ -285,6 +286,30 @@ export async function updateAboutSettings(values: Record<string, string>): Promi
     )
   } catch (e) {
     console.error('updateAboutSettings:', e)
+    return { ok: false, error: 'Une erreur est survenue.' }
+  }
+  revalidate()
+  return { ok: true }
+}
+
+/* ------------------------- En-têtes de sections ------------------------- */
+
+// Enregistre les surtitres / titres / sous-titres des sections de l'accueil.
+// Un champ vidé est stocké vide : la valeur par défaut reprend alors la main.
+export async function updateSectionHeadings(values: Record<string, string>): Promise<ActionResult> {
+  const keys = SECTION_SETTING_KEYS.filter((key) => key in values)
+  try {
+    await prisma.$transaction(
+      keys.map((key) =>
+        prisma.setting.upsert({
+          where: { key },
+          update: { value: values[key].trim() },
+          create: { key, value: values[key].trim() },
+        }),
+      ),
+    )
+  } catch (e) {
+    console.error('updateSectionHeadings:', e)
     return { ok: false, error: 'Une erreur est survenue.' }
   }
   revalidate()

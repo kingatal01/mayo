@@ -1,3 +1,5 @@
+import type { SectionHeading } from '@/lib/section-headings'
+
 const features = [
   {
     icon: (
@@ -37,16 +39,14 @@ const features = [
   },
 ]
 
-export default function WhatWeProvide() {
+export default function WhatWeProvide({ heading }: { heading: SectionHeading }) {
   return (
     <section className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-14">
-          <span className="text-[#1D6FA4] font-semibold uppercase tracking-widest text-sm">Nos Atouts</span>
-          <h2 className="section-title mt-2">Ce que nous offrons pour votre santé</h2>
-          <p className="section-subtitle text-center">
-            Nous proposons une gamme complète de services de santé conçus pour répondre à tous vos besoins médicaux avec qualité et bienveillance.
-          </p>
+          <span className="text-[#1D6FA4] font-semibold uppercase tracking-widest text-sm">{heading.eyebrow}</span>
+          <h2 className="section-title mt-2">{heading.title}</h2>
+          <p className="section-subtitle text-center">{heading.subtitle}</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">

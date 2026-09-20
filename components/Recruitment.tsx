@@ -2,9 +2,10 @@ import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
 import { openOffersWhere } from '@/lib/jobs'
 import JobCard from '@/components/JobCard'
+import type { SectionHeading } from '@/lib/section-headings'
 
 // Section « Recrutement » de l'accueil : masquée s'il n'y a aucune offre ouverte.
-export default async function Recruitment() {
+export default async function Recruitment({ heading }: { heading: SectionHeading }) {
   const offers = await prisma.jobOffer.findMany({
     where: openOffersWhere(),
     orderBy: [{ order: 'asc' }, { createdAt: 'desc' }],
@@ -18,11 +19,9 @@ export default async function Recruitment() {
     <section id="recrutement" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-14">
-          <span className="text-[#1D6FA4] font-semibold uppercase tracking-widest text-sm">Rejoignez-nous</span>
-          <h2 className="section-title mt-2">Nous recrutons</h2>
-          <p className="section-subtitle">
-            Participez à une médecine d&apos;excellence au Tchad. Découvrez nos postes ouverts et postulez en ligne.
-          </p>
+          <span className="text-[#1D6FA4] font-semibold uppercase tracking-widest text-sm">{heading.eyebrow}</span>
+          <h2 className="section-title mt-2">{heading.title}</h2>
+          <p className="section-subtitle">{heading.subtitle}</p>
         </div>
 
         <div className="flex flex-wrap justify-center gap-6">

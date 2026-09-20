@@ -14,9 +14,10 @@ import Appointment from '@/components/Appointment'
 import Footer from '@/components/Footer'
 import { prisma } from '@/lib/prisma'
 import { getSiteSettings, socialLinks } from '@/lib/settings'
+import { getSectionHeadings } from '@/lib/section-headings'
 
 export default async function Home() {
-  const [specialties, testimonials, faqs, heroSlides, statRows, aboutSettings, siteSettings] = await Promise.all([
+  const [specialties, testimonials, faqs, heroSlides, statRows, aboutSettings, siteSettings, headings] = await Promise.all([
     prisma.specialty.findMany({
       where: { active: true },
       orderBy: { order: 'asc' },
@@ -40,6 +41,7 @@ export default async function Home() {
     prisma.stat.findMany({ orderBy: { order: 'asc' } }),
     prisma.setting.findMany({ where: { key: { startsWith: 'about_' } } }),
     getSiteSettings(),
+    getSectionHeadings(),
   ])
 
   const socials = socialLinks(siteSettings)
@@ -63,17 +65,18 @@ export default async function Home() {
       <TopBar phone={siteSettings.phone} email={siteSettings.email} address={siteSettings.address} socials={socials} />
       <Navbar />
       <Hero slides={heroSlides} stats={heroStats} />
-      <WhatWeProvide />
-      <About content={aboutContent} stats={aboutStats} />
-      <Services />
-      <Testimonials testimonials={testimonials} />
-      <FAQ faqs={faqs} />
-      <Team />
-      <Recruitment />
+      <WhatWeProvide heading={headings.provide} />
+      <About content={aboutContent} stats={aboutStats} heading={headings.about} />
+      <Services heading={headings.services} />
+      <Testimonials testimonials={testimonials} heading={headings.testimonials} />
+      <FAQ faqs={faqs} heading={headings.faq} />
+      <Team heading={headings.team} />
+      <Recruitment heading={headings.recruitment} />
       <Newsletter phone={siteSettings.phone} />
-      <Blog />
+      <Blog heading={headings.blog} />
       <Appointment
         specialties={specialties.map((s) => s.title)}
+        heading={headings.appointment}
         settings={{
           phone: siteSettings.phone,
           email: siteSettings.email,

@@ -1,7 +1,8 @@
 import { prisma } from '@/lib/prisma'
 import { doctorSocialIcons } from '@/components/doctor-assets'
+import type { SectionHeading } from '@/lib/section-headings'
 
-export default async function Team() {
+export default async function Team({ heading }: { heading: SectionHeading }) {
   const doctors = await prisma.doctor.findMany({
     where: { active: true },
     orderBy: { order: 'asc' },
@@ -11,11 +12,9 @@ export default async function Team() {
     <section id="doctor" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-14">
-          <span className="text-[#1D6FA4] font-semibold uppercase tracking-widest text-sm">Notre Équipe</span>
-          <h2 className="section-title mt-2">Rencontrez nos Médecins</h2>
-          <p className="section-subtitle">
-            Notre équipe de professionnels médicaux expérimentés et dévoués est là pour vous offrir les meilleurs soins possibles.
-          </p>
+          <span className="text-[#1D6FA4] font-semibold uppercase tracking-widest text-sm">{heading.eyebrow}</span>
+          <h2 className="section-title mt-2">{heading.title}</h2>
+          <p className="section-subtitle">{heading.subtitle}</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">

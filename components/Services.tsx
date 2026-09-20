@@ -1,7 +1,8 @@
 import { prisma } from '@/lib/prisma'
 import { getSpecialtyIcon } from '@/components/specialty-assets'
+import type { SectionHeading } from '@/lib/section-headings'
 
-export default async function Services() {
+export default async function Services({ heading }: { heading: SectionHeading }) {
   const services = await prisma.specialty.findMany({
     where: { active: true },
     orderBy: { order: 'asc' },
@@ -11,11 +12,9 @@ export default async function Services() {
     <section id="service" className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-14">
-          <span className="text-[#1D6FA4] font-semibold uppercase tracking-widest text-sm">Ce que nous proposons</span>
-          <h2 className="section-title mt-2">Nos Spécialités Médicales</h2>
-          <p className="section-subtitle">
-            Un large éventail de spécialités médicales pour répondre à tous vos besoins de santé avec expertise et bienveillance.
-          </p>
+          <span className="text-[#1D6FA4] font-semibold uppercase tracking-widest text-sm">{heading.eyebrow}</span>
+          <h2 className="section-title mt-2">{heading.title}</h2>
+          <p className="section-subtitle">{heading.subtitle}</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">

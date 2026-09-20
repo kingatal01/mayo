@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from 'react'
 import { createAppointment } from '@/lib/actions/appointments'
+import type { SectionHeading } from '@/lib/section-headings'
 
 export type AppointmentSettings = {
   phone: string
@@ -15,9 +16,11 @@ export type AppointmentSettings = {
 export default function Appointment({
   specialties,
   settings,
+  heading,
 }: {
   specialties: string[]
   settings: AppointmentSettings
+  heading: SectionHeading
 }) {
   const LAT = settings.latitude
   const LNG = settings.longitude
@@ -48,11 +51,9 @@ export default function Appointment({
     <section id="appointment" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-14">
-          <span className="text-[#1D6FA4] font-semibold uppercase tracking-widest text-sm">Réservation</span>
-          <h2 className="section-title mt-2">Prendre Rendez-vous</h2>
-          <p className="section-subtitle">
-            Remplissez le formulaire ci-dessous et notre équipe confirmera votre rendez-vous dans les 24 heures.
-          </p>
+          <span className="text-[#1D6FA4] font-semibold uppercase tracking-widest text-sm">{heading.eyebrow}</span>
+          <h2 className="section-title mt-2">{heading.title}</h2>
+          <p className="section-subtitle">{heading.subtitle}</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">

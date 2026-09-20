@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import type { SectionHeading } from '@/lib/section-headings'
 
 export type PublicFaq = {
   id: number
@@ -8,7 +9,7 @@ export type PublicFaq = {
   answer: string
 }
 
-export default function FAQ({ faqs }: { faqs: PublicFaq[] }) {
+export default function FAQ({ faqs, heading }: { faqs: PublicFaq[]; heading: SectionHeading }) {
   const [open, setOpen] = useState<number | null>(0)
 
   if (faqs.length === 0) return null
@@ -19,11 +20,9 @@ export default function FAQ({ faqs }: { faqs: PublicFaq[] }) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
           {/* Left column */}
           <div>
-            <span className="text-[#1D6FA4] font-semibold uppercase tracking-widest text-sm">FAQ</span>
-            <h2 className="section-title mt-2">Toutes vos réponses en un seul endroit</h2>
-            <p className="text-gray-500 mb-8 leading-relaxed">
-              Retrouvez les réponses aux questions les plus fréquentes sur notre clinique, notre équipe et nos services. Pour toute autre question, n&apos;hésitez pas à nous contacter.
-            </p>
+            <span className="text-[#1D6FA4] font-semibold uppercase tracking-widest text-sm">{heading.eyebrow}</span>
+            <h2 className="section-title mt-2">{heading.title}</h2>
+            <p className="text-gray-500 mb-8 leading-relaxed">{heading.subtitle}</p>
             <div className="bg-[#1D6FA4] text-white rounded-xl p-8">
               <h3 className="text-xl font-bold mb-3">Vous avez d&apos;autres questions ?</h3>
               <p className="text-blue-100 mb-6 text-sm">Notre équipe est disponible pour répondre à toutes vos questions concernant nos services de santé.</p>
