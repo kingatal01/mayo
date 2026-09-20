@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import PageHeader from '@/components/admin/PageHeader'
+import AppointmentMessage from '@/components/admin/AppointmentMessage'
 import { prisma } from '@/lib/prisma'
 import { updateAppointmentStatus, deleteAppointment } from '@/lib/actions/admin-appointments'
 import { AppointmentStatus } from '@/lib/generated/prisma/enums'
@@ -82,7 +83,7 @@ export default async function AdminAppointments({
                   <th className="px-6 py-3 font-semibold hidden lg:table-cell">Contact</th>
                   <th className="px-6 py-3 font-semibold">Spécialité</th>
                   <th className="px-6 py-3 font-semibold">Date souhaitée</th>
-                  <th className="px-6 py-3 font-semibold hidden xl:table-cell">Message</th>
+                  <th className="px-6 py-3 font-semibold hidden md:table-cell">Message</th>
                   <th className="px-6 py-3 font-semibold">Statut</th>
                   <th className="px-6 py-3 font-semibold text-right">Actions</th>
                 </tr>
@@ -97,8 +98,15 @@ export default async function AdminAppointments({
                     </td>
                     <td className="px-6 py-3.5 text-gray-500 whitespace-nowrap">{a.specialty}</td>
                     <td className="px-6 py-3.5 text-gray-500 whitespace-nowrap">{formatDate(a.date)}</td>
-                    <td className="px-6 py-3.5 text-gray-500 hidden xl:table-cell max-w-xs truncate">
-                      {a.message ?? '-'}
+                    <td className="px-6 py-3.5 text-gray-500 hidden md:table-cell">
+                      <AppointmentMessage
+                        name={a.name}
+                        email={a.email}
+                        phone={a.phone}
+                        specialty={a.specialty}
+                        date={formatDate(a.date)}
+                        message={a.message}
+                      />
                     </td>
                     <td className="px-6 py-3.5">
                       <span className={`px-2.5 py-1 rounded-full text-xs font-semibold whitespace-nowrap ${statusStyles[a.status]}`}>
