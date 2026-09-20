@@ -1,6 +1,6 @@
 'use client'
 
-import { useTransition } from 'react'
+import { useMemo, useState, useTransition } from 'react'
 import { updateApplicationStatus, deleteApplication } from '@/lib/actions/job-applications'
 import { applicationStatusLabels, applicationStatusStyles } from '@/lib/jobs'
 import type { ApplicationStatus } from '@/lib/generated/prisma/enums'
@@ -14,7 +14,16 @@ export type ApplicationRow = {
   hasCv: boolean
   status: ApplicationStatus
   createdAt: Date
-  offerTitle: string
+  /** Nul pour une candidature spontanée. */
+  offerTitle: string | null
+}
+
+type Filter = 'all' | 'offer' | 'spontaneous'
+
+const filterLabels: Record<Filter, string> = {
+  all: 'Toutes',
+  offer: 'Sur offre',
+  spontaneous: 'Spontanées',
 }
 
 function formatDate(d: Date) {
@@ -25,17 +34,50 @@ const statuses = Object.keys(applicationStatusLabels) as ApplicationStatus[]
 
 export default function ApplicationsManager({ applications }: { applications: ApplicationRow[] }) {
   const [pending, startTransition] = useTransition()
+  const [filter, setFilter] = useState<Filter>('all')
+
+  const counts = useMemo(
+    () => ({
+      all: applications.length,
+      offer: applications.filter((a) => a.offerTitle !== null).length,
+      spontaneous: applications.filter((a) => a.offerTitle === null).length,
+    }),
+    [applications],
+  )
+
+  const visible = applications.filter((a) =>
+    filter === 'all' ? true : filter === 'offer' ? a.offerTitle !== null : a.offerTitle === null,
+  )
 
   return (
     <div>
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">Candidatures</h1>
-        <p className="text-sm text-gray-500 mt-1">Candidatures reçues via les offres d&apos;emploi.</p>
+      <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-800">Candidatures</h1>
+          <p className="text-sm text-gray-500 mt-1">
+            Candidatures reçues via les offres d&apos;emploi et candidatures spontanées.
+          </p>
+        </div>
+        <div className="flex gap-1 bg-gray-100 rounded-lg p-1">
+          {(Object.keys(filterLabels) as Filter[]).map((f) => (
+            <button
+              key={f}
+              onClick={() => setFilter(f)}
+              className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-colors ${
+                filter === f ? 'bg-white text-[#1D6FA4] shadow-sm' : 'text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              {filterLabels[f]} ({counts[f]})
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-        {applications.length === 0 ? (
-          <div className="p-12 text-center text-gray-400 text-sm">Aucune candidature pour le moment.</div>
+        {visible.length === 0 ? (
+          <div className="p-12 text-center text-gray-400 text-sm">
+            {applications.length === 0 ? 'Aucune candidature pour le moment.' : 'Aucune candidature dans ce filtre.'}
+          </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
@@ -50,14 +92,20 @@ export default function ApplicationsManager({ applications }: { applications: Ap
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-50">
-                {applications.map((a) => (
+                {visible.map((a) => (
                   <tr key={a.id} className="hover:bg-gray-50 align-top">
                     <td className="px-6 py-3.5">
                       <div className="font-medium text-gray-800">{a.name}</div>
                       <div className="text-xs text-gray-400">{a.email}</div>
                       {a.phone && <div className="text-xs text-gray-400">{a.phone}</div>}
                     </td>
-                    <td className="px-6 py-3.5 text-gray-500 hidden lg:table-cell">{a.offerTitle}</td>
+                    <td className="px-6 py-3.5 text-gray-500 hidden lg:table-cell">
+                      {a.offerTitle ?? (
+                        <span className="inline-block px-2.5 py-1 rounded-full text-xs font-semibold bg-purple-50 text-purple-600">
+                          Candidature spontanée
+                        </span>
+                      )}
+                    </td>
                     <td className="px-6 py-3.5 text-gray-500 whitespace-nowrap">{formatDate(a.createdAt)}</td>
                     <td className="px-6 py-3.5">
                       {a.hasCv ? (

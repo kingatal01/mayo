@@ -31,23 +31,27 @@ async function saveCv(file: File): Promise<{ path: string } | { error: string }>
 }
 
 export async function submitApplication(formData: FormData): Promise<ApplyResult> {
-  const offerId = Number(formData.get('offerId'))
+  // Champ absent ou vide : candidature spontanée, non rattachée à une offre.
+  const rawOfferId = String(formData.get('offerId') ?? '').trim()
+  const offerId = rawOfferId ? Number(rawOfferId) : null
   const name = String(formData.get('name') ?? '').trim()
   const email = String(formData.get('email') ?? '').trim().toLowerCase()
   const phone = String(formData.get('phone') ?? '').trim()
   const message = String(formData.get('message') ?? '').trim()
   const cv = formData.get('cv')
 
-  if (!offerId || !name || !email) {
+  if (!name || !email || (rawOfferId && !offerId)) {
     return { ok: false, error: 'Veuillez remplir les champs obligatoires.' }
   }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return { ok: false, error: 'Adresse email invalide.' }
   }
 
-  const offer = await prisma.jobOffer.findUnique({ where: { id: offerId } })
-  if (!offer || !isOfferOpen(offer)) {
-    return { ok: false, error: "Cette offre n'est plus ouverte aux candidatures." }
+  if (offerId) {
+    const offer = await prisma.jobOffer.findUnique({ where: { id: offerId } })
+    if (!offer || !isOfferOpen(offer)) {
+      return { ok: false, error: "Cette offre n'est plus ouverte aux candidatures." }
+    }
   }
 
   let cvPath: string | null = null

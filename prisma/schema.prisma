@@ -64,8 +64,9 @@ model JobOffer {
 
 model JobApplication {
   id        Int               @id @default(autoincrement())
-  offerId   Int
-  offer     JobOffer          @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  // Nul pour une candidature spontanée (non liée à une offre).
+  offerId   Int?
+  offer     JobOffer?         @relation(fields: [offerId], references: [id], onDelete: Cascade)
   name      String
   email     String
   phone     String?

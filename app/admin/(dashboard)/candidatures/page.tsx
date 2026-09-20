@@ -16,7 +16,7 @@ export default async function AdminCandidatures() {
     hasCv: Boolean(a.cvPath),
     status: a.status,
     createdAt: a.createdAt,
-    offerTitle: a.offer.title,
+    offerTitle: a.offer?.title ?? null,
   }))
 
   return <ApplicationsManager applications={rows} />

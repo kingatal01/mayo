@@ -6,7 +6,8 @@ import { submitApplication } from '@/lib/actions/job-applications'
 const inputClass =
   'w-full px-4 py-3 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1D6FA4] focus:border-transparent'
 
-export default function JobApplicationForm({ offerId }: { offerId: number }) {
+// `offerId` absent : candidature spontanée, non rattachée à une offre.
+export default function JobApplicationForm({ offerId }: { offerId?: number }) {
   const [sent, setSent] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [pending, startTransition] = useTransition()
@@ -46,8 +47,10 @@ export default function JobApplicationForm({ offerId }: { offerId: number }) {
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
-      <input type="hidden" name="offerId" value={offerId} />
-      <h3 className="text-lg font-bold text-gray-800">Postuler à cette offre</h3>
+      {offerId !== undefined && <input type="hidden" name="offerId" value={offerId} />}
+      <h3 className="text-lg font-bold text-gray-800">
+        {offerId !== undefined ? 'Postuler à cette offre' : 'Envoyer une candidature spontanée'}
+      </h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Nom complet *</label>
